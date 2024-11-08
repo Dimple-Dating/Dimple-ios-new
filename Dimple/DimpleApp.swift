@@ -10,6 +10,9 @@ import SwiftData
 
 @main
 struct DimpleApp: App {
+    
+    @AppStorage("logged") var loggedIn: Bool = false
+    
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Item.self,
@@ -24,8 +27,14 @@ struct DimpleApp: App {
     }()
 
     var body: some Scene {
+        
+        
         WindowGroup {
-            ContentView()
+            if loggedIn {
+                MainTabbarView()
+            } else {
+                LoginView()
+            }
         }
         .modelContainer(sharedModelContainer)
     }

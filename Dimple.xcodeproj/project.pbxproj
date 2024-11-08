@@ -7,14 +7,31 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A235E9A2C76344700B9935D /* OnboardingActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A235E992C76344700B9935D /* OnboardingActionButton.swift */; };
+		3A235E9D2C76347800B9935D /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A235E9C2C76347800B9935D /* CustomTextField.swift */; };
 		3A433AB72C75192800F183F2 /* DimpleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A433AB62C75192800F183F2 /* DimpleApp.swift */; };
 		3A433AB92C75192800F183F2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A433AB82C75192800F183F2 /* ContentView.swift */; };
 		3A433ABB2C75192800F183F2 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A433ABA2C75192800F183F2 /* Item.swift */; };
 		3A433ABD2C75192800F183F2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A433ABC2C75192800F183F2 /* Assets.xcassets */; };
 		3A433AC02C75192800F183F2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A433ABF2C75192800F183F2 /* Preview Assets.xcassets */; };
+		3A433ACA2C75194600F183F2 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A433AC92C75194600F183F2 /* LoginView.swift */; };
+		3A433ACD2C7520A000F183F2 /* OnboardingProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A433ACC2C7520A000F183F2 /* OnboardingProfileView.swift */; };
+		3ACC64712C75341A00545F98 /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ACC64702C75341A00545F98 /* View+Extensions.swift */; };
+		3AF8AC012CDAD82600C15078 /* CustomSelectionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF8AC002CDAD82600C15078 /* CustomSelectionButton.swift */; };
+		3AF8AC032CDADEAF00C15078 /* CustomSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF8AC022CDADEAF00C15078 /* CustomSlider.swift */; };
+		3AF8AC052CDD492500C15078 /* OnboardingGenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF8AC042CDD492500C15078 /* OnboardingGenderView.swift */; };
+		3AF8AC072CDD4A6500C15078 /* OnboardingAgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF8AC062CDD4A6500C15078 /* OnboardingAgeView.swift */; };
+		3AF8AC092CDD4C7700C15078 /* OnboardingPrefGenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF8AC082CDD4C7700C15078 /* OnboardingPrefGenderView.swift */; };
+		3AF8AC0B2CDD4CE000C15078 /* OnboardingHeightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF8AC0A2CDD4CE000C15078 /* OnboardingHeightView.swift */; };
+		3AF8AC0D2CDD4E2D00C15078 /* OnboardingGalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF8AC0C2CDD4E2D00C15078 /* OnboardingGalleryView.swift */; };
+		3AF8AC0F2CDD507B00C15078 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF8AC0E2CDD507B00C15078 /* OnboardingView.swift */; };
+		3AF8AC112CDE1C4400C15078 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF8AC102CDE1C4400C15078 /* NetworkManager.swift */; };
+		3AF8AC132CDE303F00C15078 /* MainTabbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF8AC122CDE303F00C15078 /* MainTabbarView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3A235E992C76344700B9935D /* OnboardingActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingActionButton.swift; sourceTree = "<group>"; };
+		3A235E9C2C76347800B9935D /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		3A433AB32C75192800F183F2 /* Dimple.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dimple.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A433AB62C75192800F183F2 /* DimpleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DimpleApp.swift; sourceTree = "<group>"; };
 		3A433AB82C75192800F183F2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -23,6 +40,19 @@
 		3A433ABF2C75192800F183F2 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		3A433AC12C75192800F183F2 /* Dimple.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Dimple.entitlements; sourceTree = "<group>"; };
 		3A433AC22C75192800F183F2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3A433AC92C75194600F183F2 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		3A433ACC2C7520A000F183F2 /* OnboardingProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingProfileView.swift; sourceTree = "<group>"; };
+		3ACC64702C75341A00545F98 /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
+		3AF8AC002CDAD82600C15078 /* CustomSelectionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSelectionButton.swift; sourceTree = "<group>"; };
+		3AF8AC022CDADEAF00C15078 /* CustomSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSlider.swift; sourceTree = "<group>"; };
+		3AF8AC042CDD492500C15078 /* OnboardingGenderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingGenderView.swift; sourceTree = "<group>"; };
+		3AF8AC062CDD4A6500C15078 /* OnboardingAgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingAgeView.swift; sourceTree = "<group>"; };
+		3AF8AC082CDD4C7700C15078 /* OnboardingPrefGenderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPrefGenderView.swift; sourceTree = "<group>"; };
+		3AF8AC0A2CDD4CE000C15078 /* OnboardingHeightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingHeightView.swift; sourceTree = "<group>"; };
+		3AF8AC0C2CDD4E2D00C15078 /* OnboardingGalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingGalleryView.swift; sourceTree = "<group>"; };
+		3AF8AC0E2CDD507B00C15078 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		3AF8AC102CDE1C4400C15078 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		3AF8AC122CDE303F00C15078 /* MainTabbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabbarView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +85,9 @@
 		3A433AB52C75192800F183F2 /* Dimple */ = {
 			isa = PBXGroup;
 			children = (
+				3ACC646F2C752B7F00545F98 /* Fonts */,
+				3ACC646E2C752B0100545F98 /* Helpers */,
+				3A433AC82C75193000F183F2 /* View */,
 				3A433AB62C75192800F183F2 /* DimpleApp.swift */,
 				3A433AB82C75192800F183F2 /* ContentView.swift */,
 				3A433ABA2C75192800F183F2 /* Item.swift */,
@@ -72,6 +105,58 @@
 				3A433ABF2C75192800F183F2 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		3A433AC82C75193000F183F2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				3ACC646D2C752AFD00545F98 /* Onboarding */,
+				3A433ACB2C75209200F183F2 /* New Group */,
+				3A433AC92C75194600F183F2 /* LoginView.swift */,
+				3AF8AC122CDE303F00C15078 /* MainTabbarView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		3A433ACB2C75209200F183F2 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
+			sourceTree = "<group>";
+		};
+		3ACC646D2C752AFD00545F98 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				3AF8AC0E2CDD507B00C15078 /* OnboardingView.swift */,
+				3A433ACC2C7520A000F183F2 /* OnboardingProfileView.swift */,
+				3AF8AC042CDD492500C15078 /* OnboardingGenderView.swift */,
+				3AF8AC062CDD4A6500C15078 /* OnboardingAgeView.swift */,
+				3AF8AC082CDD4C7700C15078 /* OnboardingPrefGenderView.swift */,
+				3AF8AC0A2CDD4CE000C15078 /* OnboardingHeightView.swift */,
+				3AF8AC0C2CDD4E2D00C15078 /* OnboardingGalleryView.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		3ACC646E2C752B0100545F98 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				3A235E992C76344700B9935D /* OnboardingActionButton.swift */,
+				3ACC64702C75341A00545F98 /* View+Extensions.swift */,
+				3A235E9C2C76347800B9935D /* CustomTextField.swift */,
+				3AF8AC002CDAD82600C15078 /* CustomSelectionButton.swift */,
+				3AF8AC022CDADEAF00C15078 /* CustomSlider.swift */,
+				3AF8AC102CDE1C4400C15078 /* NetworkManager.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		3ACC646F2C752B7F00545F98 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -145,8 +230,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A433AB92C75192800F183F2 /* ContentView.swift in Sources */,
+				3AF8AC132CDE303F00C15078 /* MainTabbarView.swift in Sources */,
+				3AF8AC032CDADEAF00C15078 /* CustomSlider.swift in Sources */,
 				3A433ABB2C75192800F183F2 /* Item.swift in Sources */,
+				3AF8AC052CDD492500C15078 /* OnboardingGenderView.swift in Sources */,
+				3AF8AC0B2CDD4CE000C15078 /* OnboardingHeightView.swift in Sources */,
+				3AF8AC0D2CDD4E2D00C15078 /* OnboardingGalleryView.swift in Sources */,
+				3A235E9A2C76344700B9935D /* OnboardingActionButton.swift in Sources */,
+				3AF8AC072CDD4A6500C15078 /* OnboardingAgeView.swift in Sources */,
+				3A433ACA2C75194600F183F2 /* LoginView.swift in Sources */,
+				3A235E9D2C76347800B9935D /* CustomTextField.swift in Sources */,
+				3AF8AC112CDE1C4400C15078 /* NetworkManager.swift in Sources */,
+				3A433ACD2C7520A000F183F2 /* OnboardingProfileView.swift in Sources */,
+				3AF8AC012CDAD82600C15078 /* CustomSelectionButton.swift in Sources */,
+				3ACC64712C75341A00545F98 /* View+Extensions.swift in Sources */,
+				3AF8AC0F2CDD507B00C15078 /* OnboardingView.swift in Sources */,
 				3A433AB72C75192800F183F2 /* DimpleApp.swift in Sources */,
+				3AF8AC092CDD4C7700C15078 /* OnboardingPrefGenderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -285,21 +385,26 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Dimple/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.dimple.Dimple;
+				MARKETING_VERSION = 2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dimple.dating;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -316,21 +421,26 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Dimple/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.dimple.Dimple;
+				MARKETING_VERSION = 2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dimple.dating;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
