@@ -9,6 +9,8 @@ import SwiftUI
 
 struct OnboardingActionButton: View {
     
+    var title: String = "continue"
+    
     var action: () -> ()
     
     @State private var animationOffset: CGFloat = -22
@@ -36,8 +38,8 @@ struct OnboardingActionButton: View {
                     .shadow(color: .black.opacity(0.1), radius: 4)
                 
                 HStack {
-                    Text("CONTINUE")
-                        .font(.custom("Avenir-Next", size: 20))
+                    Text(title.uppercased())
+                        .font(.avenir(style: .regular, size: 18))
                         .tracking(1)
                     
                     Image(.longRightArrow)

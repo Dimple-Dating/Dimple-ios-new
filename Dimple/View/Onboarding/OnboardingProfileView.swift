@@ -14,26 +14,38 @@ struct OnboardingProfileView: View {
     
     @State private var progressValue: Float = 0.25
     
-    @Binding var onboardingStep: OnboardingStep
+    @Binding var viewModel: OnboardingViewModel
+    
+    @State private var showRequiredNameField: Bool = false
+    
+    @State private var showRequiredEmailField: Bool = false
     
     var body: some View {
         
         VStack(spacing: 0) {
             
-            CustomTextField(placeholder: "Your Name", value: $nameValue, showIsRequired: .constant(false))
+            CustomTextField(placeholder: "Your Name", value: $viewModel.user.name, showIsRequired: $showRequiredNameField)
             
-            CustomTextField(placeholder: "Your Last Name (optional)", value: $nameValue, showIsRequired: .constant(false))
+            CustomTextField(placeholder: "Your Last Name (optional)", value: $viewModel.user.lastName, showIsRequired: .constant(false))
             
-            CustomTextField(placeholder: "Your Email Address", value: $nameValue, showIsRequired: .constant(false))
+            CustomTextField(placeholder: "Your Email Address", value: $viewModel.user.email, showIsRequired: $showRequiredEmailField)
             
-            CustomTextField(placeholder: "Your Nickname", value: $nameValue, showIsRequired: .constant(false))
+            CustomTextField(placeholder: "Your Nickname", value: $viewModel.user.userName, showIsRequired: .constant(false))
             
             Spacer()
             
             OnboardingActionButton() {
-                onboardingStep = .gender
+                
+                if viewModel.user.name.isEmpty {
+                    showRequiredNameField = true
+                } else if viewModel.user.email.isEmpty {
+                    showRequiredEmailField = true
+                } else {
+                    viewModel.step = .gender
+                }
             }
             .hSpacing(.trailing)
+            .padding(.bottom, 54)
             
         }
         .padding(.horizontal)
@@ -46,43 +58,6 @@ struct OnboardingProfileView: View {
 
 #Preview {
     
-    OnboardingProfileView(onboardingStep: .constant(.age))
+    OnboardingView()
     
-}
-
-
-struct OnboardingTemplate: ViewModifier {
-    
-    let title: String
-    let progress: Float
-
-    func body(content: Content) -> some View {
-        
-        VStack(spacing: 0) {
-            
-            Text(title)
-                .font(.title2)
-                .fontWeight(.bold)
-                .hSpacing(.leading)
-                .padding([.leading, .all])
-                .padding(.leading)
-            
-            ProgressView(value: progress)
-                .tint(.black)
-                .progressViewStyle(LinearProgressViewStyle())
-                .padding([.bottom, .leading])
-                .padding(.leading)
-            
-            content
-            
-        }
-        .padding(.vertical)
-        
-    }
-}
-
-extension View {
-    func onboardingTemplate(title: String, progress: Float) -> some View {
-        modifier(OnboardingTemplate(title: title, progress: progress))
-    }
 }

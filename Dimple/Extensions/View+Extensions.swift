@@ -28,3 +28,21 @@ extension View {
     }
     
 }
+
+extension Font {
+    
+    enum Avenir: String {
+        
+        case regular = "Avenir Next"
+        case medium = "Avenir Next Medium"
+        case demiBold = "Avenir Next Demi Bold"
+        case bold = "Avenir Next Bold"
+        
+    }
+    
+    static func avenir(style: Avenir, size: CGFloat) -> Font {
+        return .custom(style.rawValue, size: size)
+    }
+    
+}
+

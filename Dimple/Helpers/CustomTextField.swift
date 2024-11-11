@@ -15,22 +15,32 @@ struct CustomTextField: View {
     
     @Binding var showIsRequired: Bool
     
-    @State private var isTyping: Bool = false
+    @FocusState private var isTextFieldFocused: Bool
+    
+    @State private var hasValue: Bool = false
     
     var body: some View {
         
         VStack(alignment: .leading) {
             
             Text(placeholder)
+                .font(.avenir(style: .regular, size: 16))
                 .foregroundStyle(.gray)
-                .opacity(isTyping ? 1 : 0)
-                .offset(y: isTyping ? 0 : 30)
-                .animation(.easeIn(duration: 0.3), value: isTyping)
+                .opacity(hasValue ? 1 : 0)
+                .offset(y: hasValue ? 0 : 30)
+                .animation(.easeIn(duration: 0.3), value: hasValue)
             
             TextField(placeholder, text: $value)
-                .onChange(of: value) {
-                    isTyping = value.count > 0
+                .font(.avenir(style: .regular, size: 14))
+                .focused($isTextFieldFocused)
+                .onChange(of: isTextFieldFocused) {
+                    if isTextFieldFocused {
+                        hasValue = true
+                    } else {
+                        hasValue = value.count > 0
+                    }
                 }
+                
             
             Rectangle()
                 .foregroundStyle(showIsRequired ? .red : .black)

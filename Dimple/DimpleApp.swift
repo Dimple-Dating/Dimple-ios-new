@@ -30,11 +30,7 @@ struct DimpleApp: App {
         
         
         WindowGroup {
-            if loggedIn {
-                MainTabbarView()
-            } else {
-                LoginView()
-            }
+            OnboardingView()
         }
         .modelContainer(sharedModelContainer)
     }

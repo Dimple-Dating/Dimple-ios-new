@@ -9,7 +9,7 @@ import SwiftUI
 
 struct OnboardingGenderView: View {
     
-    @Binding var onboardingStep: OnboardingStep
+    @Binding var viewModel: OnboardingViewModel
     
     var body: some View {
         
@@ -17,22 +17,25 @@ struct OnboardingGenderView: View {
             
             Spacer()
             
-            CustomSelectionButton(text: "Male", isSelected: .constant(false))
+            CustomSelectionButton(text: User.Gender.male.title, isSelected: .constant(false))
                 .hSpacing(.trailing)
                 .padding(.trailing, 32)
                 .onTapGesture {
-                    onboardingStep = .age
+                    viewModel.user.gender = User.Gender.male.rawValue
+                    viewModel.step = .age
                 }
             
-            CustomSelectionButton(text: "Female", isSelected: .constant(false))
+            CustomSelectionButton(text: User.Gender.female.title, isSelected: .constant(false))
                 .hSpacing(.trailing)
                 .padding(.trailing, 32)
                 .onTapGesture {
-                    onboardingStep = .age
+                    viewModel.user.gender = User.Gender.female.rawValue
+                    viewModel.step = .age
                 }
             
         }
         .padding(.vertical)
+        .padding(.bottom)
         .onboardingTemplate(title: "CHOOSE GENDER YOU\nIDENTIFY WITH", progress: 0.30)
         
     }
@@ -40,5 +43,5 @@ struct OnboardingGenderView: View {
 }
 
 #Preview {
-    OnboardingGenderView(onboardingStep: .constant(.age))
+    OnboardingGenderView(viewModel: .constant(.init()))
 }

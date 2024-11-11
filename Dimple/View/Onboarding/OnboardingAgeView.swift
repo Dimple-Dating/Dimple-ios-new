@@ -9,9 +9,13 @@ import SwiftUI
 
 struct OnboardingAgeView: View {
     
-    @Binding var onboardingStep: OnboardingStep
+    @Binding var viewModel: OnboardingViewModel
     
     @State private var activeID: UUID?
+    
+    
+    let ageValues: [CarouselModel] = (18...99).compactMap({ CarouselModel(value: "\($0)") })
+
     
     var body: some View {
         
@@ -28,7 +32,7 @@ struct OnboardingAgeView: View {
             ) { age in
                 GeometryReader { _ in
                     Text("\(age.value)")
-                        .font(.system(size: 72))
+                        .font(.avenir(style: .medium, size: 64))
                 }
             }
             .frame(height: 72)
@@ -37,19 +41,27 @@ struct OnboardingAgeView: View {
             Spacer()
             
             OnboardingActionButton() {
-                onboardingStep = .prefGender
+                
+                if let selectedAge = ageValues.first(where: {$0.id == activeID})?.value {
+                    viewModel.user.age = selectedAge
+                    viewModel.step = .prefGender
+                }
+                
             }
             .hSpacing(.trailing)
             .padding(.trailing, 32)
+            .padding(.bottom, 54)
             
         }
-        .padding(.vertical)
         .onboardingTemplate(title: "SET YOUR AGE", progress: 0.45)
+        .onAppear {
+            activeID = ageValues[5].id
+        }
         
     }
 
 }
 
 #Preview {
-    OnboardingAgeView(onboardingStep: .constant(.age))
+    OnboardingAgeView(viewModel: .constant(.init()))
 }

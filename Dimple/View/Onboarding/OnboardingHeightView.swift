@@ -9,7 +9,9 @@ import SwiftUI
 
 struct OnboardingHeightView: View {
     
-    @Binding var onboardingStep: OnboardingStep
+    @State private var  heightValues: [CarouselModel] = []
+    
+    @Binding var viewModel: OnboardingViewModel
     
     @State private var activeID: UUID?
     
@@ -28,7 +30,7 @@ struct OnboardingHeightView: View {
             ) { height in
                 GeometryReader { _ in
                     Text("\(height.value)")
-                        .font(.system(size: 72))
+                        .font(.avenir(style: .medium, size: 64))
                 }
             }
             .frame(height: 72)
@@ -37,19 +39,40 @@ struct OnboardingHeightView: View {
             Spacer()
             
             OnboardingActionButton() {
-                onboardingStep = .gallery
+                
+                if let selectedHeight = heightValues.first(where: {$0.id == activeID})?.value {
+                    
+                    viewModel.user.height = selectedHeight.convertToMeters()
+                    viewModel.step = .gallery
+                    
+                }
             }
             .hSpacing(.trailing)
             .padding(.trailing, 32)
+            .padding(.bottom, 54)
             
         }
-        .padding(.vertical)
         .onboardingTemplate(title: "HOW TALL ARE YOU?", progress: 0.75)
+        .onAppear {
+            setHeights()
+        }
         
+    }
+    
+    func setHeights() {
+        
+        for feet in 4...7 {
+            for inch in 0...11 {
+                let item = CarouselModel(value: "\(feet)’\(inch)")
+                heightValues.append(item)
+            }
+        }
+        
+        self.activeID = heightValues.first(where: {$0.value == "5’6"})?.id
     }
 
 }
 
 #Preview {
-    OnboardingHeightView(onboardingStep: .constant(.age))
+    OnboardingHeightView(viewModel: .constant(.init()))
 }

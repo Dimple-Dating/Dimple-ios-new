@@ -16,9 +16,10 @@ struct CustomSelectionButton: View {
     var body: some View {
         
         Text(text)
+            .font(.avenir(style: .regular, size: 15))
             .foregroundStyle(isSelected ? .black : .gray)
-            .padding(.horizontal, 24)
-            .padding(.vertical, 12)
+            .padding(.horizontal, 20)
+            .padding(.vertical, 10)
             .overlay {
                 Capsule()
                     .stroke(lineWidth: 1)

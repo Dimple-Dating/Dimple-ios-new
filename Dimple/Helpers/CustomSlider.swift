@@ -12,17 +12,13 @@ struct CarouselModel: Identifiable {
     var value: String
 }
 
-let ageValues: [CarouselModel] = (20...99).compactMap({ CarouselModel(value: "\($0)") })
-let heightValues: [CarouselModel] = [.init(value: "4'0"), .init(value: "4'1"), .init(value: "4'2"), .init(value: "4'3"), .init(value: "4'4"), .init(value: "4'5"), .init(value: "4'6"), .init(value: "4'7"), .init(value: "4'8"), .init(value: "4'9")]
-
-
 struct CustomCarousel<Content: View, Data: RandomAccessCollection>: View where Data.Element: Identifiable {
     
     @Binding var selection: Data.Element.ID?
     var data: Data
     @ViewBuilder var content: (Data.Element) -> Content
     
-    let cellWidth = UIScreen.main.bounds.width - 64
+    let cellWidth = UIScreen.main.bounds.width - 42
     
     var body: some View {
         GeometryReader { _ in
@@ -35,7 +31,7 @@ struct CustomCarousel<Content: View, Data: RandomAccessCollection>: View where D
                 }
                 .scrollTargetLayout()
             }
-            .safeAreaPadding(.horizontal, max((UIScreen.main.bounds.width) / 2.4, 0))
+            .safeAreaPadding(.horizontal, max((UIScreen.main.bounds.width) / 2.45, 0))
             .scrollPosition(id: $selection)
             .scrollTargetBehavior(.viewAligned(limitBehavior: .always))
             .scrollIndicators(.hidden)
@@ -60,10 +56,8 @@ struct CustomCarousel<Content: View, Data: RandomAccessCollection>: View where D
         .frame(width: cellWidth / 3.3)
     }
 }
-//#Preview {
-//    CustomCarousel(selection: .constant(UUID), data: ageValues) { ageModel in
-//        <#code#>
-//    }
-//}
+#Preview {
+    OnboardingHeightView(viewModel: .constant(.init()))
+}
 
 

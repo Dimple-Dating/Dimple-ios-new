@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Observation
 
 enum OnboardingStep: String, CaseIterable {
     case profile
@@ -14,51 +15,19 @@ enum OnboardingStep: String, CaseIterable {
     case prefGender
     case height
     case gallery
-    
-    var progress: Float {
-        switch self {
-        case .profile:
-            return 0.15
-        case .gender:
-            return 0.30
-        case .age:
-            return 0.35
-        case .prefGender:
-            return 0.50
-        case .height:
-            return 0.65
-        case .gallery:
-            return 0.75
-        }
-    }
-    
-    var title: String {
-        switch self {
-        case .profile:
-            return "COMPLETE YOUR PROFILE"
-        case .gender:
-            return "CHOOSE GENDER YOU\nIDENTIFY WITH"
-        case .age:
-            return "SET YOUR AGE"
-        case .prefGender:
-            return "CHOOSE GENDER YOU ARE\nINTERESTED IN"
-        case .height:
-            return "HOW TALL ARE YOU?"
-        case .gallery:
-            return "COMPLETE YOUR PROFILE"
-        }
-    }
+    case locationPermission
+    case rate
+    case final
+  
 }
 
 struct OnboardingView: View {
     
-    @AppStorage("logged") var loggedIn: Bool = false
-    
-    @State private var onboardingStep: OnboardingStep = .profile
+    @State private var viewModel: OnboardingViewModel = .init()
     
     var body: some View {
         
-        VStack {
+        VStack(spacing: 0) {
             
             Button {
                 previousStep()
@@ -68,66 +37,99 @@ struct OnboardingView: View {
             }
             .hSpacing(.leading)
             .padding(.leading, 32)
-            .padding(.bottom, 8)
+            .padding(.bottom)
 
             
             Divider()
             
             ScrollViewReader { proxy in
                 ScrollView(.horizontal, showsIndicators: false) {
-                    LazyHStack {
-                        OnboardingProfileView(onboardingStep: $onboardingStep)
+                    LazyHStack(spacing: 0) {
+                        
+                        OnboardingProfileView(viewModel: $viewModel)
                             .id(OnboardingStep.profile)
                             .frame(width: UIScreen.main.bounds.width)
                             .containerRelativeFrame(.horizontal)
                         
-                        OnboardingGenderView(onboardingStep: $onboardingStep)
+                        OnboardingGenderView(viewModel: $viewModel)
                             .id(OnboardingStep.gender)
                             .frame(width: UIScreen.main.bounds.width)
                             .containerRelativeFrame(.horizontal)
                         
-                        OnboardingAgeView(onboardingStep: $onboardingStep)
+                        OnboardingAgeView(viewModel: $viewModel)
                             .id(OnboardingStep.age)
                             .frame(width: UIScreen.main.bounds.width)
                             .containerRelativeFrame(.horizontal)
                         
-                        OnboardingPrefGenderView(onboardingStep: $onboardingStep)
+                        OnboardingPrefGenderView(viewModel: $viewModel)
                             .id(OnboardingStep.prefGender)
                             .frame(width: UIScreen.main.bounds.width)
                             .containerRelativeFrame(.horizontal)
                         
-                        OnboardingHeightView(onboardingStep: $onboardingStep)
+                        OnboardingHeightView(viewModel: $viewModel)
                             .id(OnboardingStep.height)
                             .frame(width: UIScreen.main.bounds.width)
                             .containerRelativeFrame(.horizontal)
                         
-                        OnboardingGalleryView(onboardingStep: $onboardingStep)
+                        OnboardingGalleryView(viewModel: $viewModel)
                             .id(OnboardingStep.gallery)
+                            .frame(width: UIScreen.main.bounds.width)
+                            .containerRelativeFrame(.horizontal)
+                        
+                        OnboardingLocationView(viewModel: $viewModel)
+                            .id(OnboardingStep.locationPermission)
+                            .frame(width: UIScreen.main.bounds.width)
+                            .containerRelativeFrame(.horizontal)
+                        
+                        OnboardingRateView(viewModel: $viewModel)
+                            .id(OnboardingStep.rate)
+                            .frame(width: UIScreen.main.bounds.width)
+                            .containerRelativeFrame(.horizontal)
+                        
+                        OnboardingFinalView(viewModel: $viewModel)
+                            .id(OnboardingStep.final)
                             .frame(width: UIScreen.main.bounds.width)
                             .containerRelativeFrame(.horizontal)
                         
                     }
                 }
+                
+                .ignoresSafeArea()
                 .scrollDisabled(true)
-                .onChange(of: onboardingStep) {
+                .onChange(of: viewModel.step) {
                     withAnimation {
-                        proxy.scrollTo(onboardingStep, anchor: .center)
+                        proxy.scrollTo(viewModel.step, anchor: .center)
                     }
                 }
             }
         }
+        .fullScreenCover(isPresented: $viewModel.showMainView, content: {
+            MainTabbarView()
+        })
     }
     
     private func previousStep() {
-        guard let currentIndex = OnboardingStep.allCases.firstIndex(of: onboardingStep),
+        guard let currentIndex = OnboardingStep.allCases.firstIndex(of: viewModel.step),
               currentIndex > 0 else {
             return
         }
-        onboardingStep = OnboardingStep.allCases[currentIndex - 1]
+        viewModel.step = OnboardingStep.allCases[currentIndex - 1]
     }
     
 }
 
+
+@Observable
+class OnboardingViewModel {
+    
+    var step: OnboardingStep = .profile
+    
+    var user: User = .init()
+    
+    var showMainView: Bool = false
+    
+    
+}
 
 #Preview {
     OnboardingView()

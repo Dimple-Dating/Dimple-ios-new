@@ -9,7 +9,7 @@ import SwiftUI
 import Observation
 import AuthenticationServices
 
-struct User: Codable {
+struct AuthUser: Codable {
     let id: String
     let token: String
     let refreshToken: String
@@ -34,7 +34,7 @@ struct User: Codable {
 @Observable
 final class AuthViewModel {
     
-    var user: User?
+    var user: AuthUser?
     var errorMessage: String?
     var showOnboarding: Bool = false
 
@@ -75,21 +75,21 @@ struct LoginView: View {
             
             ZStack {
                 
-                Button(action: {
-                    
-                }, label: {
-                    
-                    Text(" Sign in with Apple")
-                        .font(.system(size: 18, weight: .semibold))
-                        .foregroundStyle(.black)
-                        .frame(width: 320, height: 44)
-                        .overlay {
-                            Capsule()
-                                .stroke(lineWidth: 1)
-                                .foregroundStyle(.black)
-                        }
-                    
-                })
+//                Button(action: {
+//                    
+//                }, label: {
+//                    
+//                    Text(" Sign in with Apple")
+//                        .font(.system(size: 18, weight: .semibold))
+//                        .foregroundStyle(.black)
+//                        .frame(width: 320, height: 44)
+//                        .overlay {
+//                            Capsule()
+//                                .stroke(lineWidth: 1)
+//                                .foregroundStyle(.black)
+//                        }
+//                    
+//                })
                 
                 SignInWithAppleButton(.signUp) { request in
                     request.requestedScopes = [.fullName, .email]
@@ -113,7 +113,6 @@ struct LoginView: View {
             
         }
         .padding(.horizontal)
-        
         .fullScreenCover(isPresented: $viewModel.showOnboarding, content: {
             OnboardingView()
         })

@@ -27,6 +27,13 @@
 		3AF8AC0F2CDD507B00C15078 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF8AC0E2CDD507B00C15078 /* OnboardingView.swift */; };
 		3AF8AC112CDE1C4400C15078 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF8AC102CDE1C4400C15078 /* NetworkManager.swift */; };
 		3AF8AC132CDE303F00C15078 /* MainTabbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF8AC122CDE303F00C15078 /* MainTabbarView.swift */; };
+		3AF8AC152CE23CA100C15078 /* OnboardingLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF8AC142CE23CA100C15078 /* OnboardingLocationView.swift */; };
+		3AF8AC172CE23EAB00C15078 /* OnboardingRateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF8AC162CE23EAB00C15078 /* OnboardingRateView.swift */; };
+		3AF8AC192CE23FA400C15078 /* OnboardingFinalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF8AC182CE23FA400C15078 /* OnboardingFinalView.swift */; };
+		3AF8AC1C2CE29BC800C15078 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF8AC1B2CE29BC800C15078 /* String+Extensions.swift */; };
+		3AF8AC1E2CE29D3100C15078 /* Numbers+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF8AC1D2CE29D3100C15078 /* Numbers+Extensions.swift */; };
+		3AF8AC202CE2A7AA00C15078 /* OnboardingTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF8AC1F2CE2A7AA00C15078 /* OnboardingTemplate.swift */; };
+		3AF8AC232CE2A7DA00C15078 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF8AC222CE2A7DA00C15078 /* User.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +60,13 @@
 		3AF8AC0E2CDD507B00C15078 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		3AF8AC102CDE1C4400C15078 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		3AF8AC122CDE303F00C15078 /* MainTabbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabbarView.swift; sourceTree = "<group>"; };
+		3AF8AC142CE23CA100C15078 /* OnboardingLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingLocationView.swift; sourceTree = "<group>"; };
+		3AF8AC162CE23EAB00C15078 /* OnboardingRateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingRateView.swift; sourceTree = "<group>"; };
+		3AF8AC182CE23FA400C15078 /* OnboardingFinalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFinalView.swift; sourceTree = "<group>"; };
+		3AF8AC1B2CE29BC800C15078 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
+		3AF8AC1D2CE29D3100C15078 /* Numbers+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Numbers+Extensions.swift"; sourceTree = "<group>"; };
+		3AF8AC1F2CE2A7AA00C15078 /* OnboardingTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTemplate.swift; sourceTree = "<group>"; };
+		3AF8AC222CE2A7DA00C15078 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,8 +99,9 @@
 		3A433AB52C75192800F183F2 /* Dimple */ = {
 			isa = PBXGroup;
 			children = (
-				3ACC646F2C752B7F00545F98 /* Fonts */,
+				3AF8AC1A2CE29BAB00C15078 /* Extensions */,
 				3ACC646E2C752B0100545F98 /* Helpers */,
+				3AF8AC212CE2A7C600C15078 /* Models */,
 				3A433AC82C75193000F183F2 /* View */,
 				3A433AB62C75192800F183F2 /* DimpleApp.swift */,
 				3A433AB82C75192800F183F2 /* ContentView.swift */,
@@ -128,6 +143,7 @@
 		3ACC646D2C752AFD00545F98 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
+				3AF8AC1F2CE2A7AA00C15078 /* OnboardingTemplate.swift */,
 				3AF8AC0E2CDD507B00C15078 /* OnboardingView.swift */,
 				3A433ACC2C7520A000F183F2 /* OnboardingProfileView.swift */,
 				3AF8AC042CDD492500C15078 /* OnboardingGenderView.swift */,
@@ -135,6 +151,9 @@
 				3AF8AC082CDD4C7700C15078 /* OnboardingPrefGenderView.swift */,
 				3AF8AC0A2CDD4CE000C15078 /* OnboardingHeightView.swift */,
 				3AF8AC0C2CDD4E2D00C15078 /* OnboardingGalleryView.swift */,
+				3AF8AC142CE23CA100C15078 /* OnboardingLocationView.swift */,
+				3AF8AC162CE23EAB00C15078 /* OnboardingRateView.swift */,
+				3AF8AC182CE23FA400C15078 /* OnboardingFinalView.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -143,7 +162,6 @@
 			isa = PBXGroup;
 			children = (
 				3A235E992C76344700B9935D /* OnboardingActionButton.swift */,
-				3ACC64702C75341A00545F98 /* View+Extensions.swift */,
 				3A235E9C2C76347800B9935D /* CustomTextField.swift */,
 				3AF8AC002CDAD82600C15078 /* CustomSelectionButton.swift */,
 				3AF8AC022CDADEAF00C15078 /* CustomSlider.swift */,
@@ -152,11 +170,22 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
-		3ACC646F2C752B7F00545F98 /* Fonts */ = {
+		3AF8AC1A2CE29BAB00C15078 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				3ACC64702C75341A00545F98 /* View+Extensions.swift */,
+				3AF8AC1B2CE29BC800C15078 /* String+Extensions.swift */,
+				3AF8AC1D2CE29D3100C15078 /* Numbers+Extensions.swift */,
 			);
-			path = Fonts;
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		3AF8AC212CE2A7C600C15078 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				3AF8AC222CE2A7DA00C15078 /* User.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -230,6 +259,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A433AB92C75192800F183F2 /* ContentView.swift in Sources */,
+				3AF8AC172CE23EAB00C15078 /* OnboardingRateView.swift in Sources */,
+				3AF8AC192CE23FA400C15078 /* OnboardingFinalView.swift in Sources */,
+				3AF8AC232CE2A7DA00C15078 /* User.swift in Sources */,
 				3AF8AC132CDE303F00C15078 /* MainTabbarView.swift in Sources */,
 				3AF8AC032CDADEAF00C15078 /* CustomSlider.swift in Sources */,
 				3A433ABB2C75192800F183F2 /* Item.swift in Sources */,
@@ -239,12 +271,16 @@
 				3A235E9A2C76344700B9935D /* OnboardingActionButton.swift in Sources */,
 				3AF8AC072CDD4A6500C15078 /* OnboardingAgeView.swift in Sources */,
 				3A433ACA2C75194600F183F2 /* LoginView.swift in Sources */,
+				3AF8AC1C2CE29BC800C15078 /* String+Extensions.swift in Sources */,
 				3A235E9D2C76347800B9935D /* CustomTextField.swift in Sources */,
+				3AF8AC152CE23CA100C15078 /* OnboardingLocationView.swift in Sources */,
 				3AF8AC112CDE1C4400C15078 /* NetworkManager.swift in Sources */,
 				3A433ACD2C7520A000F183F2 /* OnboardingProfileView.swift in Sources */,
 				3AF8AC012CDAD82600C15078 /* CustomSelectionButton.swift in Sources */,
+				3AF8AC202CE2A7AA00C15078 /* OnboardingTemplate.swift in Sources */,
 				3ACC64712C75341A00545F98 /* View+Extensions.swift in Sources */,
 				3AF8AC0F2CDD507B00C15078 /* OnboardingView.swift in Sources */,
+				3AF8AC1E2CE29D3100C15078 /* Numbers+Extensions.swift in Sources */,
 				3A433AB72C75192800F183F2 /* DimpleApp.swift in Sources */,
 				3AF8AC092CDD4C7700C15078 /* OnboardingPrefGenderView.swift in Sources */,
 			);
@@ -389,7 +425,8 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationPortrait";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -425,7 +462,8 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationPortrait";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
