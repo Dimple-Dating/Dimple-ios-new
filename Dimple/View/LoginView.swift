@@ -45,7 +45,7 @@ final class AuthViewModel {
         
         do {
             user = try await NetworkManager.shared.fetch(urlString: url, method: .POST, body: ["code" : token, "user" : userData])
-            showOnboarding = !((user?.onboardingFinished ?? "") == "true")
+            showOnboarding = true //((user?.onboardingFinished ?? "") == "true")
         } catch {
             errorMessage = "Failed to load data: \(error)"
         }
@@ -55,67 +55,71 @@ final class AuthViewModel {
 
 struct LoginView: View {
     
-    @State private var showOnboarding: Bool = false
-    
     @Bindable private var viewModel = AuthViewModel()
+    
+    @AppStorage("token") var appToken: String = ""
     
     var body: some View {
         
-        VStack {
-            
-            Spacer()
-            
-            Image(.dimpleLogoBlack)
-                .resizable()
-                .scaledToFit()
-                .frame(width: 260)
-                .clipped()
-            
-            Spacer()
-            
-            ZStack {
+        NavigationStack {
+            VStack {
                 
-//                Button(action: {
-//                    
-//                }, label: {
-//                    
-//                    Text(" Sign in with Apple")
-//                        .font(.system(size: 18, weight: .semibold))
-//                        .foregroundStyle(.black)
-//                        .frame(width: 320, height: 44)
-//                        .overlay {
-//                            Capsule()
-//                                .stroke(lineWidth: 1)
-//                                .foregroundStyle(.black)
-//                        }
-//                    
-//                })
+                Spacer()
                 
-                SignInWithAppleButton(.signUp) { request in
-                    request.requestedScopes = [.fullName, .email]
-                } onCompletion: { result in
-                    switch result {
-                    case .success(let authorization):
-                        handleSuccessfulLogin(with: authorization)
-                    case .failure(let error):
-                        handleLoginError(with: error)
+                Image(.dimpleLogoBlack)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 260)
+                    .clipped()
+                
+                Spacer()
+                
+                ZStack {
+                    
+                    //                Button(action: {
+                    //
+                    //                }, label: {
+                    //
+                    //                    Text(" Sign in with Apple")
+                    //                        .font(.system(size: 18, weight: .semibold))
+                    //                        .foregroundStyle(.black)
+                    //                        .frame(width: 320, height: 44)
+                    //                        .overlay {
+                    //                            Capsule()
+                    //                                .stroke(lineWidth: 1)
+                    //                                .foregroundStyle(.black)
+                    //                        }
+                    //
+                    //                })
+                    
+                    SignInWithAppleButton(.signUp) { request in
+                        request.requestedScopes = [.fullName, .email]
+                    } onCompletion: { result in
+                        switch result {
+                        case .success(let authorization):
+                            handleSuccessfulLogin(with: authorization)
+                        case .failure(let error):
+                            handleLoginError(with: error)
+                        }
                     }
+                    .frame(width: 320, height: 44)
+                    
                 }
-                .frame(width: 320, height: 44)
+                .padding(.bottom)
+                
+                Text("By proceeding, you agree to both Dimple\nPrivacy Policy and Terms of Service.")
+                    .font(.system(size: 12))
+                    .multilineTextAlignment(.center)
+                    .lineSpacing(5)
                 
             }
-            .padding(.bottom)
-            
-            Text("By proceeding, you agree to both Dimple\nPrivacy Policy and Terms of Service.")
-                .font(.system(size: 12))
-                .multilineTextAlignment(.center)
-                .lineSpacing(5)
-            
+            .padding(.horizontal)
+            .background(
+                NavigationLink("", destination: OnboardingView().toolbar(.hidden), isActive: $viewModel.showOnboarding)
+                    .hidden()
+            )
+            .toolbar(.hidden)
         }
-        .padding(.horizontal)
-        .fullScreenCover(isPresented: $viewModel.showOnboarding, content: {
-            OnboardingView()
-        })
         
     }
     
@@ -127,6 +131,8 @@ struct LoginView: View {
                 
                 Task {
                     await viewModel.loadUser(token: token, userData: userCredential.user)
+                    appToken = viewModel.user?.token ?? ""
+                    print("TOKEN = \(appToken)")
                 }
             }
         }

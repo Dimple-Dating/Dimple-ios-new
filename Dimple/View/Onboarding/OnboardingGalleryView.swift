@@ -13,19 +13,16 @@ struct GalleryPhoto: Identifiable {
     let id = UUID()
     let index: Int
     var photo: Image?
+    var uiPhoto: UIImage?
 }
 
 struct OnboardingGalleryView: View {
     
     @Binding var viewModel: OnboardingViewModel
     
-    @State private var photos: [GalleryPhoto] = [.init(index: 0), .init(index: 1), .init(index: 2), .init(index: 3), .init(index: 4), .init(index: 5)]
     @State private var draggingPhoto: Image?
     
-    var columns: [GridItem] = Array(repeating: .init(.flexible()), count: 2)
-    
-    @State private var isPhotoPickerPresented = false
-    @State private var selectedIndex: Int?
+    @State private var showAlert = false
     
     var body: some View {
         
@@ -39,7 +36,7 @@ struct OnboardingGalleryView: View {
             let columns = Array(repeating: GridItem(spacing: 34), count: 2)
             
             LazyVGrid(columns: columns, spacing: 34) {
-                ForEach(photos, id: \.id) { photo in
+                ForEach(viewModel.photos, id: \.id) { photo in
                     
                     GeometryReader {
                         let size = $0.size
@@ -63,18 +60,18 @@ struct OnboardingGalleryView: View {
                                     return false
                                 } isTargeted: { status in
                                     if let draggingPhoto, status, draggingPhoto != photo.photo {
-                                        if let sourceIndex = photos.firstIndex(where: {$0.photo == draggingPhoto}),
-                                           let destinationIndex = photos.firstIndex(where: {$0.photo == photo.photo}) {
+                                        if let sourceIndex = viewModel.photos.firstIndex(where: {$0.photo == draggingPhoto}),
+                                           let destinationIndex = viewModel.photos.firstIndex(where: {$0.photo == photo.photo}) {
                                             withAnimation(.bouncy) {
-                                                let sourceItem = photos.remove(at: sourceIndex)
-                                                photos.insert(sourceItem, at: destinationIndex)
+                                                let sourceItem = viewModel.photos.remove(at: sourceIndex)
+                                                viewModel.photos.insert(sourceItem, at: destinationIndex)
                                             }
                                         }
                                     }
                                 }
                                 .onTapGesture {
-                                    selectedIndex = photos.firstIndex(where: {$0.id == photo.id})
-                                    isPhotoPickerPresented = true
+                                    viewModel.selectedPhotoIndex = photo.index
+                                    viewModel.isPhotoPickerPresented = true
                                 }
                             
                             
@@ -85,15 +82,27 @@ struct OnboardingGalleryView: View {
                                     .fill(Color.black)
                                     .frame(width: size.width, height: size.height)
                                 
-                                Text("\(photo.index + 1)")
-                                    .font(.avenir(style: .medium, size: 15))
-                                    .foregroundStyle(.white)
-                                    .padding(12)
+                                VStack {
+                                    
+                                    Text("\(photo.index + 1)")
+                                        .font(.avenir(style: .medium, size: 15))
+                                        .foregroundStyle(.white)
+//                                    
+//                                    if viewModel.photos.firstIndex(where: {$0.photo == nil}) != nil {
+//                                        Text("+")
+//                                            .font(.avenir(style: .medium, size: 15))
+//                                            .foregroundStyle(.white)
+//                                            
+//                                    }
+                                    
+                                }
+                                .padding(12)
                                     
                             }
                             .onTapGesture {
-                                selectedIndex = photos.firstIndex(where: {$0.photo == nil})
-                                isPhotoPickerPresented = true
+                                viewModel.selectedPhotoIndex = photo.index
+                                viewModel.isPhotoPickerPresented = true
+                                
                             }
                         }
                     }
@@ -106,30 +115,25 @@ struct OnboardingGalleryView: View {
             Spacer()
             
             OnboardingActionButton() {
-                viewModel.step = .locationPermission
+                
+                if viewModel.photos.filter({ $0.photo != nil }).count < 2 {
+                    showAlert = true
+                } else {
+                    viewModel.step = .locationPermission
+                }
             }
             .hSpacing(.trailing)
             .padding(.trailing, 32)
             .padding(.bottom, 32)
+            .alert(isPresented: $showAlert) {
+                Alert(
+                    title: Text("Minimum 2 photos required"),
+                    message: Text(""),
+                    dismissButton: .default(Text("OK"))
+                )
+            }
         }
         .onboardingTemplate(title: "COMPLETE YOUR PROFILE", progress: 1.0)
-        .sheet(isPresented: $isPhotoPickerPresented) {
-            
-            let photosLimit = 6
-            PhotoPickerView(selectionLimit: photosLimit - (selectedIndex ?? 0)) { selectedPhotos in
-                
-                guard var index = photos.first(where: {$0.photo == nil})?.index else {
-                    return
-                }
-                
-                selectedPhotos.forEach { photo in
-                    photos[index].photo = Image(uiImage: photo)
-                    index += 1
-                }
-                
-            }
-            
-        }
         
     }
     

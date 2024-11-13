@@ -13,9 +13,9 @@ struct User {
     var lastName: String = ""
     var email: String = ""
     var userName: String = ""
-    var gender: Int? = nil
+    var gender: Gender? = nil
     var age: String = ""
-    var interestedIn: String = ""
+    var interestedIn: InterestedInGender? = nil
     var height: Float = 0
     
     enum Gender: Int {
@@ -32,4 +32,35 @@ struct User {
         }
     }
     
+    enum InterestedInGender: Int {
+        case openToAll = 1
+        case men = 2
+        case women = 3
+        
+        var title: String {
+            switch self {
+            case .men:
+                "Men"
+            case .women:
+                "Women"
+            case .openToAll:
+                "Open to all"
+            }
+        }
+        
+    }
+    
+}
+
+extension Encodable {
+    func toDictionary() -> [String: Any]? {
+        do {
+            let data = try JSONEncoder().encode(self)
+            let jsonObject = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+            return jsonObject as? [String: Any]
+        } catch {
+            print("Failed to convert struct to [String: Any]:", error)
+            return nil
+        }
+    }
 }

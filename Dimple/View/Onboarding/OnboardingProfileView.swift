@@ -10,6 +10,8 @@ import SwiftUI
 
 struct OnboardingProfileView: View {
     
+    @AppStorage("token") var appToken: String = ""
+    
     @State private var nameValue: String = ""
     
     @State private var progressValue: Float = 0.25
@@ -30,12 +32,11 @@ struct OnboardingProfileView: View {
             
             CustomTextField(placeholder: "Your Email Address", value: $viewModel.user.email, showIsRequired: $showRequiredEmailField)
             
-            CustomTextField(placeholder: "Your Nickname", value: $viewModel.user.userName, showIsRequired: .constant(false))
+            CustomTextField(placeholder: "Your Username", value: $viewModel.user.userName, showIsRequired: .constant(false))
             
             Spacer()
             
-            OnboardingActionButton() {
-                
+            OnboardingActionButton() {                
                 if viewModel.user.name.isEmpty {
                     showRequiredNameField = true
                 } else if viewModel.user.email.isEmpty {

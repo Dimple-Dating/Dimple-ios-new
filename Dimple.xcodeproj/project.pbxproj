@@ -34,6 +34,7 @@
 		3AF8AC1E2CE29D3100C15078 /* Numbers+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF8AC1D2CE29D3100C15078 /* Numbers+Extensions.swift */; };
 		3AF8AC202CE2A7AA00C15078 /* OnboardingTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF8AC1F2CE2A7AA00C15078 /* OnboardingTemplate.swift */; };
 		3AF8AC232CE2A7DA00C15078 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF8AC222CE2A7DA00C15078 /* User.swift */; };
+		3AF8AC252CE525A100C15078 /* Infos in Resources */ = {isa = PBXBuildFile; fileRef = 3AF8AC242CE525A100C15078 /* Infos */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -67,6 +68,7 @@
 		3AF8AC1D2CE29D3100C15078 /* Numbers+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Numbers+Extensions.swift"; sourceTree = "<group>"; };
 		3AF8AC1F2CE2A7AA00C15078 /* OnboardingTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTemplate.swift; sourceTree = "<group>"; };
 		3AF8AC222CE2A7DA00C15078 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		3AF8AC242CE525A100C15078 /* Infos */ = {isa = PBXFileReference; lastKnownFileType = text; path = Infos; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 		3A433AAA2C75192700F183F2 = {
 			isa = PBXGroup;
 			children = (
+				3AF8AC242CE525A100C15078 /* Infos */,
 				3A433AB52C75192800F183F2 /* Dimple */,
 				3A433AB42C75192800F183F2 /* Products */,
 			);
@@ -126,18 +129,10 @@
 			isa = PBXGroup;
 			children = (
 				3ACC646D2C752AFD00545F98 /* Onboarding */,
-				3A433ACB2C75209200F183F2 /* New Group */,
 				3A433AC92C75194600F183F2 /* LoginView.swift */,
 				3AF8AC122CDE303F00C15078 /* MainTabbarView.swift */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		3A433ACB2C75209200F183F2 /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "New Group";
 			sourceTree = "<group>";
 		};
 		3ACC646D2C752AFD00545F98 /* Onboarding */ = {
@@ -246,6 +241,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3AF8AC252CE525A100C15078 /* Infos in Resources */,
 				3A433AC02C75192800F183F2 /* Preview Assets.xcassets in Resources */,
 				3A433ABD2C75192800F183F2 /* Assets.xcassets in Resources */,
 			);

@@ -6,10 +6,13 @@
 //
 
 import SwiftUI
+import StoreKit
 
 struct OnboardingRateView: View {
     
     @Binding var viewModel: OnboardingViewModel
+    
+    @Environment(\.requestReview) var requestReview
     
     var body: some View {
         
@@ -34,7 +37,7 @@ struct OnboardingRateView: View {
             HStack(spacing: 0) {
                 
                 Button {
-                    // rate
+                    requestReview()
                 } label: {
                     
                     Text("Rate")
@@ -57,6 +60,11 @@ struct OnboardingRateView: View {
             .background(.black)
             
         }
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+               requestReview()
+           }
+       }
         
     }
 }
