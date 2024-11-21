@@ -30,7 +30,7 @@ struct DimpleApp: App {
         
         
         WindowGroup { 
-            LoginView()
+            ProfileView()
 //            if token.isEmpty {
 //                LoginView()
 //            } else {

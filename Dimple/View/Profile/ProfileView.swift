@@ -9,9 +9,13 @@ import SwiftUI
 
 struct ProfileView: View {
     
+    @State private var navigationPath = [String]()
+    @State private var showCommentsView: Bool = false
+    
+    
     var body: some View {
         
-        NavigationStack {
+        NavigationStack(path: $navigationPath) {
             
             ScrollView(showsIndicators: false) {
                 
@@ -29,7 +33,15 @@ struct ProfileView: View {
                     
                 }
             }
+            .navigationDestination(for: String.self) { selection in
+                
+            }
         }
+        .fullScreenCover(isPresented: $showCommentsView, content: {
+            ProfileCommentsView()
+                .presentationBackground(.clear)
+                .ignoresSafeArea()
+        })
         
     }
     
@@ -223,36 +235,52 @@ struct ProfileView: View {
     @ViewBuilder
     var profileImage: some View {
         
-        VStack {
+        ZStack(alignment: .bottomTrailing) {
             
             Image(.img1)
                 .resizable()
                 .scaledToFill()
-                .frame(width: .infinity)
+//                .frame(width: .infinity)
             
-            HStack(spacing: 12) {
+            VStack(spacing: 12) {
                 
-                Spacer()
-                
-                Button(action: {
+                Button {
+                    //
+                } label: {
                     
-                }, label: {
-                    Image(.chat)
-                })
-                
-                Button(action: {
+                    VStack(spacing: 3) {
+                        Image(systemName: "heart.fill")
+                            .font(.system(size: 24))
+                        
+                        Text("321")
+                            .font(.avenir(style: .demiBold, size: 13))
+                    }
+                }
+                .padding(.bottom, 12)
+
+                Button {
+                    UIView.setAnimationsEnabled(false)
+                    self.showCommentsView = true
+                } label: {
                     
-                }, label: {
-                    Image(.heart)
-                })
-                
-                
-                
+                    VStack(spacing: 3) {
+                        Image(systemName: "ellipsis.bubble.fill")
+                            .font(.system(size: 24))
+                        
+                        Text("321")
+                            .font(.avenir(style: .demiBold, size: 13))
+                    }
+                }
+
             }
-            .padding(.trailing)
-            .padding(.top, 4)
+            .foregroundStyle(.white)
+            .shadow(color: .black.opacity(0.5), radius: 3)
+            .padding(.trailing, 12)
+            .padding(.bottom, 42)
             
         }
+        .padding(.top)
+        
         
     }
     
