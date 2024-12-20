@@ -16,7 +16,12 @@
 		3A433AC02C75192800F183F2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A433ABF2C75192800F183F2 /* Preview Assets.xcassets */; };
 		3A433ACA2C75194600F183F2 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A433AC92C75194600F183F2 /* LoginView.swift */; };
 		3A433ACD2C7520A000F183F2 /* OnboardingProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A433ACC2C7520A000F183F2 /* OnboardingProfileView.swift */; };
+		3A4CAD142D1042DA00124AFE /* SchoolSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4CAD132D1042DA00124AFE /* SchoolSearchView.swift */; };
+		3A4CAD172D10430600124AFE /* GooglePlaces in Frameworks */ = {isa = PBXBuildFile; productRef = 3A4CAD162D10430600124AFE /* GooglePlaces */; };
+		3A4CAD192D10430600124AFE /* GooglePlacesSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 3A4CAD182D10430600124AFE /* GooglePlacesSwift */; };
+		3A4CAD1C2D104A1400124AFE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3A4CAD1B2D104A1400124AFE /* GoogleService-Info.plist */; };
 		3ACC64712C75341A00545F98 /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ACC64702C75341A00545F98 /* View+Extensions.swift */; };
+		3AE12EE62D04FCEF0039C64A /* OnboardingSchoolView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE12EE52D04FCEF0039C64A /* OnboardingSchoolView.swift */; };
 		3AF8AC012CDAD82600C15078 /* CustomSelectionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF8AC002CDAD82600C15078 /* CustomSelectionButton.swift */; };
 		3AF8AC032CDADEAF00C15078 /* CustomSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF8AC022CDADEAF00C15078 /* CustomSlider.swift */; };
 		3AF8AC052CDD492500C15078 /* OnboardingGenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF8AC042CDD492500C15078 /* OnboardingGenderView.swift */; };
@@ -53,7 +58,10 @@
 		3A433AC22C75192800F183F2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3A433AC92C75194600F183F2 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		3A433ACC2C7520A000F183F2 /* OnboardingProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingProfileView.swift; sourceTree = "<group>"; };
+		3A4CAD132D1042DA00124AFE /* SchoolSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolSearchView.swift; sourceTree = "<group>"; };
+		3A4CAD1B2D104A1400124AFE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3ACC64702C75341A00545F98 /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
+		3AE12EE52D04FCEF0039C64A /* OnboardingSchoolView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSchoolView.swift; sourceTree = "<group>"; };
 		3AF8AC002CDAD82600C15078 /* CustomSelectionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSelectionButton.swift; sourceTree = "<group>"; };
 		3AF8AC022CDADEAF00C15078 /* CustomSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSlider.swift; sourceTree = "<group>"; };
 		3AF8AC042CDD492500C15078 /* OnboardingGenderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingGenderView.swift; sourceTree = "<group>"; };
@@ -82,6 +90,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A4CAD172D10430600124AFE /* GooglePlaces in Frameworks */,
+				3A4CAD192D10430600124AFE /* GooglePlacesSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -108,6 +118,7 @@
 		3A433AB52C75192800F183F2 /* Dimple */ = {
 			isa = PBXGroup;
 			children = (
+				3A4CAD1A2D104A0B00124AFE /* Configs */,
 				3AF8AC1A2CE29BAB00C15078 /* Extensions */,
 				3ACC646E2C752B0100545F98 /* Helpers */,
 				3AF8AC212CE2A7C600C15078 /* Models */,
@@ -134,6 +145,7 @@
 		3A433AC82C75193000F183F2 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				3A4CAD122D1042BA00124AFE /* Reusable */,
 				3AF8AC292CE78D6C00C15078 /* Profile */,
 				3AF8AC262CE78CF600C15078 /* Matching */,
 				3ACC646D2C752AFD00545F98 /* Onboarding */,
@@ -141,6 +153,22 @@
 				3AF8AC122CDE303F00C15078 /* MainTabbarView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		3A4CAD122D1042BA00124AFE /* Reusable */ = {
+			isa = PBXGroup;
+			children = (
+				3A4CAD132D1042DA00124AFE /* SchoolSearchView.swift */,
+			);
+			path = Reusable;
+			sourceTree = "<group>";
+		};
+		3A4CAD1A2D104A0B00124AFE /* Configs */ = {
+			isa = PBXGroup;
+			children = (
+				3A4CAD1B2D104A1400124AFE /* GoogleService-Info.plist */,
+			);
+			path = Configs;
 			sourceTree = "<group>";
 		};
 		3ACC646D2C752AFD00545F98 /* Onboarding */ = {
@@ -153,6 +181,7 @@
 				3AF8AC062CDD4A6500C15078 /* OnboardingAgeView.swift */,
 				3AF8AC082CDD4C7700C15078 /* OnboardingPrefGenderView.swift */,
 				3AF8AC0A2CDD4CE000C15078 /* OnboardingHeightView.swift */,
+				3AE12EE52D04FCEF0039C64A /* OnboardingSchoolView.swift */,
 				3AF8AC0C2CDD4E2D00C15078 /* OnboardingGalleryView.swift */,
 				3AF8AC142CE23CA100C15078 /* OnboardingLocationView.swift */,
 				3AF8AC162CE23EAB00C15078 /* OnboardingRateView.swift */,
@@ -224,6 +253,10 @@
 			dependencies = (
 			);
 			name = Dimple;
+			packageProductDependencies = (
+				3A4CAD162D10430600124AFE /* GooglePlaces */,
+				3A4CAD182D10430600124AFE /* GooglePlacesSwift */,
+			);
 			productName = Dimple;
 			productReference = 3A433AB32C75192800F183F2 /* Dimple.app */;
 			productType = "com.apple.product-type.application";
@@ -252,6 +285,9 @@
 				Base,
 			);
 			mainGroup = 3A433AAA2C75192700F183F2;
+			packageReferences = (
+				3A4CAD152D10430600124AFE /* XCRemoteSwiftPackageReference "ios-places-sdk" */,
+			);
 			productRefGroup = 3A433AB42C75192800F183F2 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -267,6 +303,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3AF8AC252CE525A100C15078 /* Infos in Resources */,
+				3A4CAD1C2D104A1400124AFE /* GoogleService-Info.plist in Resources */,
 				3A433AC02C75192800F183F2 /* Preview Assets.xcassets in Resources */,
 				3A433ABD2C75192800F183F2 /* Assets.xcassets in Resources */,
 			);
@@ -280,6 +317,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A433AB92C75192800F183F2 /* ContentView.swift in Sources */,
+				3AE12EE62D04FCEF0039C64A /* OnboardingSchoolView.swift in Sources */,
 				3AF8AC2B2CE78D8900C15078 /* ProfileView.swift in Sources */,
 				3AF8AC172CE23EAB00C15078 /* OnboardingRateView.swift in Sources */,
 				3AF8AC192CE23FA400C15078 /* OnboardingFinalView.swift in Sources */,
@@ -296,6 +334,7 @@
 				3AF8AC2D2CEFDCF300C15078 /* ProfileCommentsView.swift in Sources */,
 				3AF8AC282CE78D0600C15078 /* MatchingView.swift in Sources */,
 				3AF8AC1C2CE29BC800C15078 /* String+Extensions.swift in Sources */,
+				3A4CAD142D1042DA00124AFE /* SchoolSearchView.swift in Sources */,
 				3A235E9D2C76347800B9935D /* CustomTextField.swift in Sources */,
 				3AF8AC152CE23CA100C15078 /* OnboardingLocationView.swift in Sources */,
 				3AF8AC112CDE1C4400C15078 /* NetworkManager.swift in Sources */,
@@ -528,6 +567,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3A4CAD152D10430600124AFE /* XCRemoteSwiftPackageReference "ios-places-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googlemaps/ios-places-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.2.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3A4CAD162D10430600124AFE /* GooglePlaces */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3A4CAD152D10430600124AFE /* XCRemoteSwiftPackageReference "ios-places-sdk" */;
+			productName = GooglePlaces;
+		};
+		3A4CAD182D10430600124AFE /* GooglePlacesSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3A4CAD152D10430600124AFE /* XCRemoteSwiftPackageReference "ios-places-sdk" */;
+			productName = GooglePlacesSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 3A433AAB2C75192700F183F2 /* Project object */;
 }

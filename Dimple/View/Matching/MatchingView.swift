@@ -12,11 +12,26 @@ import Observation
 
 
 
+
 struct MatchingView: View {
+    
+    @State private var testUsers: [User] = [.init(name: "dsa"), .init(name: "aa"), .init(name: "ccc"), .init(name: "dsdsaa"), .init(name: "ds12a"),]
     
     var body: some View {
         
-        Text("Hello, World!")
+//        VStack {
+            
+            ZStack {
+                
+                ForEach(testUsers, id: \.name) { test in
+                    ProfileView()
+                        .padding()
+                }
+                
+            }
+            
+//        }
+//        .frame(maxWidth: .infinity, maxHeight: .infinity)
         
     }
     

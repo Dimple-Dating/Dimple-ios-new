@@ -19,10 +19,10 @@ struct OnboardingGenderView: View {
             CustomSelectionButton(text: User.Gender.male.title, isSelected: .constant(viewModel.user.gender == .male))
                 .hSpacing(.trailing)
                 .padding(.trailing, 32)
-                .offset(x: viewModel.user.gender == .male && isAnimating ? -UIScreen.main.bounds.width : 0)
+                .offset(x: viewModel.user.gender == .female && isAnimating ? -UIScreen.main.bounds.width : 0)
                 .onTapGesture {
+                    viewModel.user.gender = .male
                     withAnimation(.easeInOut(duration: 0.5)) {
-                        viewModel.user.gender = .male
                         isAnimating = true
                     }
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -33,10 +33,10 @@ struct OnboardingGenderView: View {
             CustomSelectionButton(text: User.Gender.female.title, isSelected: .constant(viewModel.user.gender == .female))
                 .hSpacing(.trailing)
                 .padding(.trailing, 32)
-                .offset(x: viewModel.user.gender == .female && isAnimating ? -UIScreen.main.bounds.width : 0)
+                .offset(x: viewModel.user.gender == .male && isAnimating ? -UIScreen.main.bounds.width : 0)
                 .onTapGesture {
+                    viewModel.user.gender = .female
                     withAnimation(.easeInOut(duration: 0.5)) {
-                        viewModel.user.gender = .female
                         isAnimating = true
                     }
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {

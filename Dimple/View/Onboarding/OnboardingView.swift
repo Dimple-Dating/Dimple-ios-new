@@ -14,6 +14,7 @@ enum OnboardingStep: String, CaseIterable {
     case age
     case prefGender
     case height
+    case school
     case gallery
     case locationPermission
     case rate
@@ -69,6 +70,11 @@ struct OnboardingView: View {
                         
                         OnboardingHeightView(viewModel: $viewModel)
                             .id(OnboardingStep.height)
+                            .frame(width: UIScreen.main.bounds.width)
+                            .containerRelativeFrame(.horizontal)
+                        
+                        OnboardingSchoolView(viewModel: $viewModel)
+                            .id(OnboardingStep.school)
                             .frame(width: UIScreen.main.bounds.width)
                             .containerRelativeFrame(.horizontal)
                         

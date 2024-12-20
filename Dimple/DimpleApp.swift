@@ -28,7 +28,6 @@ struct DimpleApp: App {
 
     var body: some Scene {
         
-        
         WindowGroup { 
             ProfileView()
 //            if token.isEmpty {

@@ -43,7 +43,7 @@ struct OnboardingHeightView: View {
                 if let selectedHeight = heightValues.first(where: {$0.id == activeID})?.value {
                     
                     viewModel.user.height = selectedHeight.convertToMeters()
-                    viewModel.step = .gallery
+                    viewModel.step = .school
                     
                 }
             }

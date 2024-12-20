@@ -32,8 +32,6 @@ struct OnboardingProfileView: View {
             
             CustomTextField(placeholder: "Your Email Address", value: $viewModel.user.email, showIsRequired: $showRequiredEmailField)
             
-            CustomTextField(placeholder: "Your Username", value: $viewModel.user.userName, showIsRequired: .constant(false))
-            
             Spacer()
             
             OnboardingActionButton() {                
