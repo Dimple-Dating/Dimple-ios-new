@@ -10,29 +10,32 @@ import Observation
 
 // /users/list
 
-
+@Observable
+class HomeViewModel {
+    
+    var users: [User] = []
+    
+    init(){
+        users = [.init(name: "dsa"), .init(name: "aa"), .init(name: "ccc"), .init(name: "dsdsaa"), .init(name: "ds12a")]
+    }
+    
+}
 
 
 struct MatchingView: View {
     
-    @State private var testUsers: [User] = [.init(name: "dsa"), .init(name: "aa"), .init(name: "ccc"), .init(name: "dsdsaa"), .init(name: "ds12a"),]
+    var viewModel: HomeViewModel = .init()
     
     var body: some View {
         
-//        VStack {
-            
-            ZStack {
+        ZStack(alignment: .center) {
                 
-                ForEach(testUsers, id: \.name) { test in
-                    ProfileView()
-                        .padding()
-                }
-                
+            ForEach(viewModel.users) { color in
+                ProfileView()
             }
-            
-//        }
-//        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        
+                
+        }
+    
     }
     
 }

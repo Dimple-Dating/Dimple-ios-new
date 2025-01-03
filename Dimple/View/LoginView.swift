@@ -14,18 +14,18 @@ struct AuthUser: Codable {
     let token: String
     let refreshToken: String
     let onboardingFinished: String?
-    var name: String
-    var lastName: String
-    var email: String
+//    var name: String?
+//    var lastName: String?
+//    var email: String?
     
     private enum CodingKeys: String, CodingKey {
         case id
         case token
         case refreshToken = "refresh_token"
         case onboardingFinished = "onboarding_finished"
-        case name = "full_name"
-        case lastName = "last_name"
-        case email
+//        case name = "full_name"
+//        case lastName = "last_name"
+//        case email
     }
     
 }
@@ -36,16 +36,14 @@ final class AuthViewModel {
     
     var user: AuthUser?
     var errorMessage: String?
-    var showOnboarding: Bool = false
 
     func loadUser(token: String, userData: String) async {
-        print("Wczytuje")
         
         let url = "https://api.dimple.dating/v1/auth/apple"
+        let body = ["code" : token, "user" : userData]
         
         do {
-            user = try await NetworkManager.shared.fetch(urlString: url, method: .POST, body: ["code" : token, "user" : userData])
-            showOnboarding = true //((user?.onboardingFinished ?? "") == "true")
+            user = try await NetworkManager.shared.fetch(urlString: url, method: .POST, body: body)
         } catch {
             errorMessage = "Failed to load data: \(error)"
         }
@@ -58,6 +56,8 @@ struct LoginView: View {
     @Bindable private var viewModel = AuthViewModel()
     
     @AppStorage("token") var appToken: String = ""
+    
+    @State private var showOnboarding: Bool = false
     
     var body: some View {
         
@@ -115,7 +115,7 @@ struct LoginView: View {
             }
             .padding(.horizontal)
             .background(
-                NavigationLink("", destination: OnboardingView().toolbar(.hidden), isActive: $viewModel.showOnboarding)
+                NavigationLink("", destination: OnboardingView().toolbar(.hidden), isActive: $showOnboarding)
                     .hidden()
             )
             .toolbar(.hidden)
@@ -132,6 +132,7 @@ struct LoginView: View {
                 Task {
                     await viewModel.loadUser(token: token, userData: userCredential.user)
                     appToken = viewModel.user?.token ?? ""
+                    showOnboarding = true//((viewModel.user?.onboardingFinished ?? "") != "true")
                     print("TOKEN = \(appToken)")
                 }
             }

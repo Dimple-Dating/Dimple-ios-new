@@ -7,8 +7,9 @@
 
 import Foundation
 
-struct User {
+struct User: Identifiable {
     
+    var id = UUID().uuidString
     var name: String = ""
     var lastName: String = ""
     var email: String = ""
@@ -17,6 +18,8 @@ struct User {
     var age: String = ""
     var interestedIn: InterestedInGender? = nil
     var height: Float = 0
+    var latitude: Double?
+    var longitude: Double?
     
     enum Gender: Int {
         case male = 2

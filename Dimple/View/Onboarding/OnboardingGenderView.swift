@@ -9,7 +9,7 @@ import SwiftUI
 
 struct OnboardingGenderView: View {
     
-    @Binding var viewModel: OnboardingViewModel
+    @Bindable var viewModel: OnboardingViewModel
     @State private var isAnimating = false
     
     var body: some View {
@@ -57,5 +57,5 @@ struct OnboardingGenderView: View {
 
 
 #Preview {
-    OnboardingGenderView(viewModel: .constant(.init()))
+    OnboardingGenderView(viewModel: .init())
 }

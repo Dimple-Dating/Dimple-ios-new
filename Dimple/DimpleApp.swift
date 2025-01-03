@@ -12,6 +12,7 @@ import SwiftData
 struct DimpleApp: App {
     
     @AppStorage("token") var token: String = ""
+    @AppStorage("onboardingFinished") var onboardingFinished: Bool = false
     
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
@@ -28,8 +29,15 @@ struct DimpleApp: App {
 
     var body: some Scene {
         
-        WindowGroup { 
-            ProfileView()
+        WindowGroup {
+            
+            if onboardingFinished {
+                MainTabbarView()
+            } else {
+                LoginView()
+            }
+//            MatchingView()
+            
 //            if token.isEmpty {
 //                LoginView()
 //            } else {

@@ -9,11 +9,7 @@ import SwiftUI
 
 struct OnboardingSchoolView: View {
     
-    @Binding var viewModel: OnboardingViewModel
-    
-    @State private var showSearchView: Bool = false
-    
-    var searchModel: SearchSchoolViewModel = .init()
+    @Bindable var viewModel: OnboardingViewModel
     
     var body: some View {
         
@@ -27,7 +23,7 @@ struct OnboardingSchoolView: View {
             
             VStack(alignment: .leading, spacing: 6) {
                 
-                ForEach(searchModel.selectedSchools, id: \.placeID) { place in
+                ForEach(viewModel.schoolsManager.selectedSchools, id: \.placeID) { place in
                     
                     HStack {
                         
@@ -38,13 +34,12 @@ struct OnboardingSchoolView: View {
                         Spacer()
                         
                         Button {
-                            self.searchModel.removeSchool(place)
+                            self.viewModel.schoolsManager.removeSchool(place)
                         } label: {
                             Image(systemName: "multiply")
                                 .foregroundStyle(.black)
                         }
 
-                        
                     }
                     
                     Rectangle()
@@ -64,7 +59,7 @@ struct OnboardingSchoolView: View {
                 
             }
             .onTapGesture {
-                self.showSearchView = true
+                viewModel.isSchoolSearchViewPresented = true
             }
             .padding(.top, 32)
             .padding(.leading, 32)
@@ -72,7 +67,7 @@ struct OnboardingSchoolView: View {
             
             
             Button {
-                self.showSearchView = true
+                viewModel.isSchoolSearchViewPresented = true
             } label: {
                 Text("+ Add another school")
                     .font(.avenir(style: .medium, size: 12))
@@ -85,7 +80,7 @@ struct OnboardingSchoolView: View {
             Spacer()
             
             OnboardingActionButton() {
-                
+                self.viewModel.step = .gallery
             }
             .hSpacing(.trailing)
             .padding(.trailing, 32)
@@ -93,12 +88,10 @@ struct OnboardingSchoolView: View {
             
         }
         .onboardingTemplate(title: "SCHOOLS YOU\nATTEND/ATTENDED", progress: 0.75)
-        .sheet(isPresented: $showSearchView) {
-            SchoolSearchView(model: searchModel)
-        }
+        
     }
 }
 
 #Preview {
-    OnboardingSchoolView(viewModel: .constant(.init()))
+    OnboardingSchoolView(viewModel: .init())
 }

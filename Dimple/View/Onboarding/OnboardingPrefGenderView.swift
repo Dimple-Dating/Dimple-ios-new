@@ -9,7 +9,7 @@ import SwiftUI
 
 struct OnboardingPrefGenderView: View {
     
-    @Binding var viewModel: OnboardingViewModel
+    @Bindable var viewModel: OnboardingViewModel
     @State private var isAnimating = false
     
     var body: some View {
@@ -21,7 +21,7 @@ struct OnboardingPrefGenderView: View {
             CustomSelectionButton(text: User.InterestedInGender.men.title, isSelected: .constant(viewModel.user.interestedIn == .men))
                 .hSpacing(.trailing)
                 .padding(.trailing, 32)
-                .offset(x: viewModel.user.interestedIn == .men && isAnimating ? -UIScreen.main.bounds.width : 0)
+                .offset(x: viewModel.user.interestedIn != .men && isAnimating ? -UIScreen.main.bounds.width : 0)
                 .onTapGesture {
                     withAnimation(.easeInOut(duration: 0.5)) {
                         viewModel.user.interestedIn = .men
@@ -35,7 +35,7 @@ struct OnboardingPrefGenderView: View {
             CustomSelectionButton(text: User.InterestedInGender.women.title, isSelected: .constant(viewModel.user.interestedIn == .women))
                 .hSpacing(.trailing)
                 .padding(.trailing, 32)
-                .offset(x: viewModel.user.interestedIn == .women && isAnimating ? -UIScreen.main.bounds.width : 0)
+                .offset(x: viewModel.user.interestedIn != .women && isAnimating ? -UIScreen.main.bounds.width : 0)
                 .onTapGesture {
                     withAnimation(.easeInOut(duration: 0.5)) {
                         viewModel.user.interestedIn = .women
@@ -49,7 +49,7 @@ struct OnboardingPrefGenderView: View {
             CustomSelectionButton(text: User.InterestedInGender.openToAll.title, isSelected: .constant(viewModel.user.interestedIn == .openToAll))
                 .hSpacing(.trailing)
                 .padding(.trailing, 32)
-                .offset(x: viewModel.user.interestedIn == .openToAll && isAnimating ? -UIScreen.main.bounds.width : 0)
+                .offset(x: viewModel.user.interestedIn != .openToAll && isAnimating ? -UIScreen.main.bounds.width : 0)
                 .onTapGesture {
                     withAnimation(.easeInOut(duration: 0.5)) {
                         viewModel.user.interestedIn = .openToAll
@@ -74,9 +74,9 @@ struct OnboardingPrefGenderView: View {
         
         viewModel.step = .height
         
-//        Task.detached {
-//            await viewModel.saveUserPreferences()
-//        }
+        Task.detached {
+            await viewModel.saveUserPreferences()
+        }
 //        
         
     }
@@ -84,6 +84,6 @@ struct OnboardingPrefGenderView: View {
 }
 
 #Preview {
-    OnboardingPrefGenderView(viewModel: .constant(.init()))
+    OnboardingPrefGenderView(viewModel: .init())
 }
 

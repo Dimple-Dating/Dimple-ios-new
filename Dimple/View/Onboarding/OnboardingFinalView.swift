@@ -10,9 +10,9 @@ import SwiftUI
 
 struct OnboardingFinalView: View {
     
-    @Binding var viewModel: OnboardingViewModel
+    @AppStorage("onboardingFinished") var onboardingFinished: Bool = false
     
-    @State private var showMainView: Bool = false
+    @Bindable var viewModel: OnboardingViewModel
     
     var body: some View {
         
@@ -36,7 +36,7 @@ struct OnboardingFinalView: View {
             HStack(spacing: 0) {
                 
                 Button {
-                    viewModel.showMainView = true
+                    onboardingFinished = true
                 } label: {
                     
                     Text("Go to profile")
@@ -46,7 +46,7 @@ struct OnboardingFinalView: View {
                 }
                 
                 Button {
-                    viewModel.showMainView = true
+                    onboardingFinished = true
                 } label: {
                     Text("Discover people")
                         .frame(maxWidth: .infinity, maxHeight: 90)
@@ -59,10 +59,14 @@ struct OnboardingFinalView: View {
             .background(.black)
 
         }
-        
+        .onAppear {
+            Task.detached {
+                await viewModel.saveUserData()
+            }
+        }
     }
 }
 
 #Preview {
-    OnboardingFinalView(viewModel: .constant(.init()))
+    OnboardingFinalView(viewModel: .init())
 }

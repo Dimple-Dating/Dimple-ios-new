@@ -11,7 +11,7 @@ struct OnboardingHeightView: View {
     
     @State private var  heightValues: [CarouselModel] = []
     
-    @Binding var viewModel: OnboardingViewModel
+    @Bindable var viewModel: OnboardingViewModel
     
     @State private var activeID: UUID?
     
@@ -74,5 +74,5 @@ struct OnboardingHeightView: View {
 }
 
 #Preview {
-    OnboardingHeightView(viewModel: .constant(.init()))
+    OnboardingHeightView(viewModel: .init())
 }

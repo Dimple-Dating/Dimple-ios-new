@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-
 struct OnboardingProfileView: View {
     
     @AppStorage("token") var appToken: String = ""
@@ -16,7 +15,7 @@ struct OnboardingProfileView: View {
     
     @State private var progressValue: Float = 0.25
     
-    @Binding var viewModel: OnboardingViewModel
+    @Bindable var viewModel: OnboardingViewModel
     
     @State private var showRequiredNameField: Bool = false
     

@@ -19,13 +19,24 @@ struct MainTabbarView: View {
     
     @State private var selectedTab: Tab = .profiles
     
+    @State private var tabState: Visibility = .visible
+    
+    init() {
+        let appearance = UITabBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = UIColor.white
+        
+        UITabBar.appearance().standardAppearance = appearance
+        UITabBar.appearance().scrollEdgeAppearance = appearance
+    }
+    
     var body: some View {
         
         TabView(selection: $selectedTab) {
             
             EmptyView()
 
-            Text("Swiping View")
+            MatchingView()
                 .tabItem {
                     Image(selectedTab == .profiles ? .dimpleActive : .dimple)
                         .foregroundStyle(.black)
@@ -57,7 +68,6 @@ struct MainTabbarView: View {
                 .tag(Tab.menu)
             
         }
-        .tint(.black)
         
     }
 }

@@ -57,7 +57,7 @@ struct CustomCarousel<Content: View, Data: RandomAccessCollection>: View where D
     }
 }
 #Preview {
-    OnboardingHeightView(viewModel: .constant(.init()))
+    OnboardingHeightView(viewModel: .init())
 }
 
 

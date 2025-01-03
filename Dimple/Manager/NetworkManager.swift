@@ -15,6 +15,50 @@ final class NetworkManager {
     static let shared = NetworkManager()
     
     private init() {}
+    
+    func sendRequest(urlString: String, method: RequestMethod, body: [String: Any]? = nil, completion: @escaping (Result<[String: Any], Error>) -> Void) {
+        
+        
+        guard let url = URL(string: urlString) else {
+            completion(.failure(NetworkError.invalidURL))
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = method.rawValue
+        
+        if let body = body {
+            request.httpBody = body.convertToData()
+            request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        }
+
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+
+            guard let data = data else {
+                completion(.failure(NetworkError.noData))
+                return
+            }
+
+            do {
+                if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+                    completion(.success(json))
+                } else {
+                    completion(.failure(NetworkError.decodingError))
+                }
+            } catch {
+                completion(.failure(error))
+            }
+        }
+
+        task.resume()
+    }
+    
+    
+    
 
     func fetch<T: Codable>(urlString: String, method: RequestMethod, body: [String: Any]? = nil) async throws -> T {
         guard let url = URL(string: urlString) else {
@@ -30,6 +74,7 @@ final class NetworkManager {
         }
 
         let (data, response) = try await URLSession.shared.data(for: request)
+        
         guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
             print("Error")
             throw NetworkError.requestFailed
@@ -70,18 +115,14 @@ final class NetworkManager {
         return (data, response)
     }
 
-    func uploadPhoto(image: UIImage, isInstagram: Bool = false) async throws -> (Data, URLResponse) {
-//        guard let photoOrder = photo.orderNumber.value,
-//              let localIdentifier = photo.localIdentifier else { return }
-        
-        let photoOrder = 1
-        let localIdentifier = UUID().uuidString
+    func uploadPhoto(image: UIImage, photoOrder: Int) async throws -> (Data, URLResponse) {
 
-        // Tworzenie miniatury bez zapisywania jej do dysku
+        let localIdentifier = "\(UUID().uuidString)_new"
+
         var thumbnailData: Data?
-//        if let thumbnail = createThumbnail(from: image) {
-//            thumbnailData = thumbnail.jpegData(compressionQuality: 0.3)
-//        }
+        if let thumbnail = createThumbnail(from: image) {
+            thumbnailData = thumbnail.jpegData(compressionQuality: 0.3)
+        }
 
         let boundary = UUID().uuidString
         var request = URLRequest(url: URL(string: "https://api.dimple.dating/v1/upload/photo")!)
@@ -128,7 +169,6 @@ final class NetworkManager {
         
         print("==== indentifier = \(localIdentifier)")
 
-        // Wykonaj żądanie
         let (data, response) = try await URLSession.shared.data(for: request)
         if let httpResponse = response as? HTTPURLResponse {
             print("Status Code:", httpResponse.statusCode)
@@ -149,9 +189,25 @@ final class NetworkManager {
 //            print("Failed to parse JSON:", error)
 //        }
     }
-
     
+    private func createThumbnail(from image: UIImage) -> UIImage? {
+        guard let cgImage = image.cgImage,
+              let colorSpace = cgImage.colorSpace else { return nil }
 
+        let width = Int(image.size.width * 0.2)
+        let height = Int(image.size.height * 0.2)
+        let bitsPerComponent = cgImage.bitsPerComponent
+        let bytesPerRow = cgImage.bytesPerRow
+        let bitmapInfo = cgImage.bitmapInfo
+
+        guard let context = CGContext(data: nil, width: width, height: height,
+                                      bitsPerComponent: bitsPerComponent,
+                                      bytesPerRow: bytesPerRow, space: colorSpace,
+                                      bitmapInfo: bitmapInfo.rawValue) else { return nil }
+        let rect = CGRect(origin: CGPoint.zero, size: CGSize(width: width, height: height))
+        context.draw(cgImage, in: rect)
+        return context.makeImage().flatMap { UIImage(cgImage: $0) }
+    }
 
     
 }
@@ -166,6 +222,7 @@ enum RequestMethod: String {
 
 enum NetworkError: Error {
     case invalidURL
+    case noData
     case requestFailed
     case decodingError
     case unknown

@@ -10,7 +10,7 @@ import StoreKit
 
 struct OnboardingRateView: View {
     
-    @Binding var viewModel: OnboardingViewModel
+    @Bindable var viewModel: OnboardingViewModel
     
     @Environment(\.requestReview) var requestReview
     
@@ -70,5 +70,5 @@ struct OnboardingRateView: View {
 }
 
 #Preview {
-    OnboardingRateView(viewModel: .constant(.init()))
+    OnboardingRateView(viewModel: .init())
 }

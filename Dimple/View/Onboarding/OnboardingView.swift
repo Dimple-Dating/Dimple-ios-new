@@ -41,66 +41,64 @@ struct OnboardingView: View {
             .padding(.leading, 32)
             .padding(.bottom)
 
-            
             Divider()
             
             ScrollViewReader { proxy in
                 ScrollView(.horizontal, showsIndicators: false) {
                     LazyHStack(spacing: 0) {
                         
-                        OnboardingProfileView(viewModel: $viewModel)
+                        OnboardingProfileView(viewModel: viewModel)
                             .id(OnboardingStep.profile)
                             .frame(width: UIScreen.main.bounds.width)
                             .containerRelativeFrame(.horizontal)
                         
-                        OnboardingGenderView(viewModel: $viewModel)
+                        OnboardingGenderView(viewModel: viewModel)
                             .id(OnboardingStep.gender)
                             .frame(width: UIScreen.main.bounds.width)
                             .containerRelativeFrame(.horizontal)
                         
-                        OnboardingAgeView(viewModel: $viewModel)
+                        OnboardingAgeView(viewModel: viewModel)
                             .id(OnboardingStep.age)
                             .frame(width: UIScreen.main.bounds.width)
                             .containerRelativeFrame(.horizontal)
                         
-                        OnboardingPrefGenderView(viewModel: $viewModel)
+                        OnboardingPrefGenderView(viewModel: viewModel)
                             .id(OnboardingStep.prefGender)
                             .frame(width: UIScreen.main.bounds.width)
                             .containerRelativeFrame(.horizontal)
                         
-                        OnboardingHeightView(viewModel: $viewModel)
+                        OnboardingHeightView(viewModel: viewModel)
                             .id(OnboardingStep.height)
                             .frame(width: UIScreen.main.bounds.width)
                             .containerRelativeFrame(.horizontal)
                         
-                        OnboardingSchoolView(viewModel: $viewModel)
+                        OnboardingSchoolView(viewModel: viewModel)
                             .id(OnboardingStep.school)
                             .frame(width: UIScreen.main.bounds.width)
                             .containerRelativeFrame(.horizontal)
                         
-                        OnboardingGalleryView(viewModel: $viewModel)
+                        OnboardingGalleryView(viewModel: viewModel)
                             .id(OnboardingStep.gallery)
                             .frame(width: UIScreen.main.bounds.width)
                             .containerRelativeFrame(.horizontal)
                         
-                        OnboardingLocationView(viewModel: $viewModel)
+                        OnboardingLocationView(viewModel: viewModel)
                             .id(OnboardingStep.locationPermission)
                             .frame(width: UIScreen.main.bounds.width)
                             .containerRelativeFrame(.horizontal)
                         
-                        OnboardingRateView(viewModel: $viewModel)
+                        OnboardingRateView(viewModel: viewModel)
                             .id(OnboardingStep.rate)
                             .frame(width: UIScreen.main.bounds.width)
                             .containerRelativeFrame(.horizontal)
                         
-                        OnboardingFinalView(viewModel: $viewModel)
+                        OnboardingFinalView(viewModel: viewModel)
                             .id(OnboardingStep.final)
                             .frame(width: UIScreen.main.bounds.width)
                             .containerRelativeFrame(.horizontal)
                         
                     }
                 }
-                
                 .ignoresSafeArea()
                 .scrollDisabled(true)
                 .onChange(of: viewModel.step) {
@@ -110,9 +108,11 @@ struct OnboardingView: View {
                 }
             }
         }
+        .sheet(isPresented: $viewModel.isSchoolSearchViewPresented) {
+            SchoolSearchView(model: viewModel.schoolsManager)
+        }
         .sheet(isPresented: $viewModel.isPhotoPickerPresented) {
             
-            #warning("refactor")
             let replacePhoto = viewModel.photos.first(where: {$0.index == viewModel.selectedPhotoIndex})?.photo != nil
             
             let photosLimit = replacePhoto ? 1 : 6
@@ -124,22 +124,40 @@ struct OnboardingView: View {
            
             PhotoPickerView(selectionLimit: photosLimit - finalSpots) { selectedPhotos in
                 
-                if replacePhoto, let newPhoto = selectedPhotos.first {
+                let uniquePhotos = selectedPhotos.filter { newPhoto in
+                    guard let dataNew = newPhoto.pngData() else {
+                        return false
+                    }
+                    return !viewModel.photos.contains { existing in
+                        guard let existingData = existing.uiPhoto?.pngData() else { return false }
+                        return existingData == dataNew
+                    }
+                }
+                
+                if replacePhoto, let newPhoto = uniquePhotos.first {
                     viewModel.photos[viewModel.selectedPhotoIndex].photo = Image(uiImage: newPhoto)
                     viewModel.photos[viewModel.selectedPhotoIndex].uiPhoto = newPhoto
+                    
+                    Task {
+                        await viewModel.saveUserPhoto(newPhoto, photoOrder: viewModel.selectedPhotoIndex)
+                    }
                     return
                 }
                 
-                guard var index = viewModel.photos.first(where: {$0.photo == nil})?.index else {
+                guard var index = viewModel.photos.first(where: { $0.photo == nil })?.index else {
                     return
                 }
                 
-                selectedPhotos.forEach { photo in
+                uniquePhotos.reversed().forEach { photo in
                     viewModel.photos[index].photo = Image(uiImage: photo)
                     viewModel.photos[index].uiPhoto = photo
+                    
+                    Task {
+                        await viewModel.saveUserPhoto(photo, photoOrder: index)
+                    }
+                    
                     index += 1
                 }
-                
             }
             
         }
@@ -177,6 +195,12 @@ class OnboardingViewModel {
     
     var isPhotoPickerPresented: Bool = false
     
+    var isSchoolSearchViewPresented: Bool = false
+    
+    var schoolsManager: SearchSchoolViewModel = .init()
+    
+    var locationManager = LocationManager()
+    
     func checkEmailAddress() {
         
         
@@ -190,11 +214,7 @@ class OnboardingViewModel {
         ]
         
         do {
-            let (data, response) = try await NetworkManager.shared.fetchResponse(
-                urlString: "https://api.dimple.dating/v1/user/preference",
-                method: .POST,
-                body: data
-            )
+            let (data, response) = try await NetworkManager.shared.fetchResponse(urlString: "https://api.dimple.dating/v1/user/preference", method: .POST, body: data)
             
             if let httpResponse = response as? HTTPURLResponse {
                 print("Status Code:", httpResponse.statusCode)
@@ -216,15 +236,23 @@ class OnboardingViewModel {
     
     func saveUserData() async {
         
+        let identifier = await UIDevice.current.identifierForVendor?.uuidString ?? ""
+        
         let data: [String: Any] = [
+            "email": user.email,
             "firstname": user.name,
             "lastname": user.lastName,
             "age": user.age,
             "tall": user.height,
-            "gender": user.gender!.rawValue
+            "gender": user.gender!.rawValue,
+            "onboarding_finished": "true",
+            "device_identifier": identifier,
+            "lat": user.latitude ?? 0,
+            "lng": user.longitude ?? 0
         ]
         
         do {
+            
             let (data, response) = try await NetworkManager.shared.fetchResponse(
                 urlString: "https://api.dimple.dating/v1/user/update",
                 method: .PUT,
@@ -250,10 +278,10 @@ class OnboardingViewModel {
         
     }
     
-    func saveUserPhoto(_ photo: UIImage) async {
+    func saveUserPhoto(_ photo: UIImage, photoOrder: Int) async {
         
         do {
-            let (data, response) = try await NetworkManager.shared.uploadPhoto(image: photo)
+            let (data, response) = try await NetworkManager.shared.uploadPhoto(image: photo, photoOrder: photoOrder)
         } catch {
             print(error.localizedDescription)
         }

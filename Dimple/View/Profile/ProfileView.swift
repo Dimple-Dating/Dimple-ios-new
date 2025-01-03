@@ -9,21 +9,22 @@ import SwiftUI
 
 struct ProfileView: View {
     
-    @State private var navigationPath = [String]()
-    @State private var showCommentsView: Bool = false
-    
     @State var offset: CGFloat = 0
     @GestureState var isDragging: Bool = false
     
     @State var endSwipe: Bool = false
     
+    init() {
+        UIScrollView.appearance().bounces = false
+    }
+    
     var body: some View {
+            
+        GeometryReader { proxy in
+                let size = proxy.size
         
-        NavigationStack(path: $navigationPath) {
-            
-            GeometryReader{proxy in
-//                let size = proxy.size
-            
+            ZStack {
+                
                 ScrollView(showsIndicators: false) {
                     
                     VStack(alignment: .leading) {
@@ -32,29 +33,36 @@ struct ProfileView: View {
                         
                         detailsSection
                             .padding()
-                        //
+                        
                         profileImage
                             .padding(.bottom)
                         
                         profileImage
                         
                     }
-                    //            }
-                    //            .navigationDestination(for: String.self) { selection in
-                    //
+                    .background(.white)
+                    
                 }
                 .ignoresSafeArea()
-            
+                .blur(radius: isDragging ? 4 : 0)
+                
+                if isDragging {
+                    
+                    Text(offset > 0 ? "YES" : "NO")
+                        .font(.avenir(style: .medium, size: 40))
+                        .foregroundStyle(.white)
+                        .hSpacing(offset > 0 ? .leading : .trailing)
+                        .padding(.horizontal, 32)
+                    
+                }
+                
+                
             }
-            .offset(x: offset)
-        }
-        .fullScreenCover(isPresented: $showCommentsView, content: {
-            ProfileCommentsView()
-                .presentationBackground(.clear)
-                .ignoresSafeArea()
-        })
-        .gesture(
+            
         
+        }
+        .offset(x: offset)
+        .gesture(
             DragGesture()
                 .updating($isDragging, body: { value, out, _ in
                     out = true
@@ -66,33 +74,40 @@ struct ProfileView: View {
                 })
                 .onEnded({ value in
                     
-                    let width = getRect().width - 50
+                    let width = getRect().width //- 80
                     let translation = value.translation.width
                     
                     let checkingStatus = (translation > 0 ? translation : -translation)
                     
-                    
-                    withAnimation{
-                        if checkingStatus > (width / 2){
+                    withAnimation {
+                        if checkingStatus > (width / 2) {
                             // remove Card...
                             offset = (translation > 0 ? width : -width) * 2
 //                            endSwipeActions()
                             
-                            if translation > 0{
-//                                rightSwipe()
+                            if translation > 0 {
+                                rightSwipe()
                             }
                             else{
-//                                leftSwipe()
+                                leftSwipe()
                             }
                         }
-                        else{
-                            // reset..
+                        else {
                             offset = .zero
                         }
                     }
+                    
                 })
         )
         
+    }
+    
+    func leftSwipe(){
+        print("Left Swiped")
+    }
+    
+    func rightSwipe(){
+        print("Right Swiped")
     }
     
     @ViewBuilder
@@ -119,15 +134,17 @@ struct ProfileView: View {
                     .font(.avenir(style: .medium, size: 20))
                     .textCase(.uppercase)
                     .foregroundStyle(.white)
-                    .shadow(radius: 2)
+                    .shadow(color: .black.opacity(0.5), radius: 3)
                 
                 Spacer()
                 
                 Image(.rotate)
                     .foregroundStyle(.white)
+                    .shadow(color: .black.opacity(0.7), radius: 3)
                 
                 Image(.more)
                     .foregroundStyle(.white)
+                    .shadow(color: .black.opacity(0.7), radius: 3)
                 
             }
             .frame(height: 150)
@@ -282,171 +299,6 @@ struct ProfileView: View {
     ProfileView()
 }
 
-
-struct ProfileView: View {
-    
-    var body: some View {
-        
-        NavigationStack {
-            
-            ScrollView(showsIndicators: false) {
-                
-                VStack(alignment: .leading) {
-                    
-                    profileDetailsHeader
-                    
-                    detailsSection
-                    
-                    profileImage
-                        .padding(.bottom)
-                    
-                    profileImage
-                    
-                }
-            }
-        }
-        
-    }
-    
-    @ViewBuilder
-    var profileDetailsHeader: some View {
-        
-        VStack(alignment: .leading) {
-            
-            HStack {
-                
-                Spacer()
-                
-                Image(.rotate)
-                
-                Image(.more)
-            }
-            .padding(.trailing)
-            .padding(.bottom)
-            
-            
-            HStack {
-                
-                Image(.avatar)
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: 80, height: 80)
-                    .clipShape(Circle())
-                    .shadow(radius: 6)
-                
-                Spacer()
-                
-                VStack(alignment: .leading) {
-                    
-                    Text("124")
-                        .bold()
-                    
-                    Text("Likes")
-                        .font(.system(size: 15))
-                    
-                }
-                
-                Spacer()
-                
-                VStack(alignment: .leading) {
-                    
-                    Text("67")
-                        .bold()
-                    
-                    Text("Comments")
-                        .font(.system(size: 15))
-                    
-                }
-                
-                Spacer()
-                
-                VStack(alignment: .leading) {
-                    
-                    Text("39")
-                        .bold()
-                    
-                    Text("Matches")
-                        .font(.system(size: 15))
-                    
-                }
-                
-            }
-            .padding(.horizontal)
-            
-            Text("Elena")
-                .font(.system(size: 21))
-                .fontWeight(.medium)
-                .padding(.leading)
-                .padding(.vertical, 4)
-            
-            Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore elit, sed do eiusmod tempor incididunt ut labore")
-                .font(.system(size: 15))
-                .padding(.horizontal)
-                .padding(.bottom)
-            
-        }
-        
-    }
-    
-    @ViewBuilder
-    var detailsSection: some View {
-        
-        VStack {
-            
-            ScrollView(.horizontal) {
-                
-                HStack {
-                    
-                    // user deatails
-                    
-                }
-                
-            }
-            
-            // jakis for na wiecej deatails
-            
-        }
-        
-    }
-    
-    @ViewBuilder
-    var profileImage: some View {
-        
-        VStack {
-            
-            Image(.img1)
-                .resizable()
-                .scaledToFill()
-                .frame(width: .infinity)
-            
-            HStack(spacing: 12) {
-                
-                Spacer()
-                
-                Button(action: {
-                    
-                }, label: {
-                    Image(.chat)
-                })
-                
-                Button(action: {
-                    
-                }, label: {
-                    Image(.heart)
-                })
-                
-                
-                
-            }
-            .padding(.trailing)
-            .padding(.top, 4)
-            
-        }
-        
-    }
-    
-}
- Extending View to get Bounds....
 extension View{
     func getRect()->CGRect{
         return UIScreen.main.bounds

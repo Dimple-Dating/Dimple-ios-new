@@ -18,7 +18,7 @@ struct GalleryPhoto: Identifiable {
 
 struct OnboardingGalleryView: View {
     
-    @Binding var viewModel: OnboardingViewModel
+    @Bindable var viewModel: OnboardingViewModel
     
     @State private var draggingPhoto: Image?
     
@@ -119,6 +119,7 @@ struct OnboardingGalleryView: View {
                 if viewModel.photos.filter({ $0.photo != nil }).count < 2 {
                     showAlert = true
                 } else {
+                    // send all images 
                     viewModel.step = .locationPermission
                 }
             }
@@ -140,7 +141,7 @@ struct OnboardingGalleryView: View {
 }
 
 #Preview {
-    OnboardingGalleryView(viewModel: .constant(.init()))
+    OnboardingGalleryView(viewModel: .init())
 }
 
 
