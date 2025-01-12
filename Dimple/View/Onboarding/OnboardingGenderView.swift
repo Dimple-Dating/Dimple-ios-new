@@ -16,7 +16,7 @@ struct OnboardingGenderView: View {
         VStack(spacing: 0) {
             Spacer()
             
-            CustomSelectionButton(text: User.Gender.male.title, isSelected: .constant(viewModel.user.gender == .male))
+            CustomSelectionButton(text: Gender.male.title, isSelected: .constant(viewModel.user.gender == .male))
                 .hSpacing(.trailing)
                 .padding(.trailing, 32)
                 .offset(x: viewModel.user.gender == .female && isAnimating ? -UIScreen.main.bounds.width : 0)
@@ -30,7 +30,7 @@ struct OnboardingGenderView: View {
                     }
                 }
             
-            CustomSelectionButton(text: User.Gender.female.title, isSelected: .constant(viewModel.user.gender == .female))
+            CustomSelectionButton(text: Gender.female.title, isSelected: .constant(viewModel.user.gender == .female))
                 .hSpacing(.trailing)
                 .padding(.trailing, 32)
                 .offset(x: viewModel.user.gender == .male && isAnimating ? -UIScreen.main.bounds.width : 0)

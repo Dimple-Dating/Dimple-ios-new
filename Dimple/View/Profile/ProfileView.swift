@@ -6,15 +6,26 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct ProfileView: View {
+    
+    var profile: Profile
     
     @State var offset: CGFloat = 0
     @GestureState var isDragging: Bool = false
     
     @State var endSwipe: Bool = false
     
-    init() {
+    var numberOfSections: Int {
+        if (profile.flavors?.count ?? 0) > profile.images.count {
+            return profile.flavors?.count ?? 0
+        }
+        return profile.images.count
+    }
+    
+    init(profile: Profile) {
+        self.profile = profile
         UIScrollView.appearance().bounces = false
     }
     
@@ -34,13 +45,24 @@ struct ProfileView: View {
                         detailsSection
                             .padding()
                         
-                        profileImage
-                            .padding(.bottom)
-                        
-                        profileImage
+                        ForEach(0..<numberOfSections, id: \.self) { index in
+                            
+                            if index <= profile.images.count - 1 {
+                                profileImage(profile.images[index].fullImageUrl)
+                                    .padding(.bottom, 12)
+                            }
+                            
+                            if index <= (profile.flavors?.count ?? 0) - 1 {
+                                flavorSection(profile.flavors![index])
+                                    .padding(.horizontal)
+                                    .padding(.bottom, 12)
+                            }
+                            
+                        }
                         
                     }
                     .background(.white)
+                    .padding(.bottom, 52)
                     
                 }
                 .ignoresSafeArea()
@@ -56,9 +78,7 @@ struct ProfileView: View {
                     
                 }
                 
-                
             }
-            
         
         }
         .offset(x: offset)
@@ -113,45 +133,62 @@ struct ProfileView: View {
     @ViewBuilder
     var profileDetailsHeader: some View {
         
-        ZStack(alignment: .topLeading) {
-            
-            Image(.avatar)
-                .resizable()
-                .scaledToFill()
-                .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
-                .clipped()
-            
-            HStack {
+        VStack {
+            ZStack(alignment: .topLeading) {
                 
-                Image(.avatar)
+                WebImage(url: URL(string: profile.avatar?.path ?? ""))
                     .resizable()
                     .scaledToFill()
-                    .frame(width: 40)
-                    .clipShape(Circle())
-                    .padding(.trailing)
+                    .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+                    .clipped()
                 
-                Text("Martyna")
-                    .font(.avenir(style: .medium, size: 20))
-                    .textCase(.uppercase)
-                    .foregroundStyle(.white)
-                    .shadow(color: .black.opacity(0.5), radius: 3)
+                HStack {
+                    
+                    WebImage(url: URL(string: profile.avatar?.path ?? ""))
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 40)
+                        .clipShape(Circle())
+                        .padding(.trailing)
+                    
+                    Text(profile.firstname)
+                        .font(.avenir(style: .medium, size: 20))
+                        .textCase(.uppercase)
+                        .foregroundStyle(.white)
+                        .shadow(color: .black.opacity(0.5), radius: 3)
+                    
+                    Spacer()
+                    
+                    Image(.rotate)
+                        .foregroundStyle(.white)
+                        .shadow(color: .black.opacity(0.7), radius: 3)
+                    
+                    Image(.more)
+                        .foregroundStyle(.white)
+                        .shadow(color: .black.opacity(0.7), radius: 3)
+                    
+                }
+                .frame(height: 150)
+                .padding(.horizontal)
+                .padding(.bottom)
                 
                 Spacer()
-                
-                Image(.rotate)
-                    .foregroundStyle(.white)
-                    .shadow(color: .black.opacity(0.7), radius: 3)
-                
-                Image(.more)
-                    .foregroundStyle(.white)
-                    .shadow(color: .black.opacity(0.7), radius: 3)
-                
             }
-            .frame(height: 150)
-            .padding(.horizontal)
-            .padding(.bottom)
             
-            Spacer()
+            Button {
+                //
+            } label: {
+                
+                Image(.heartActive)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 22)
+                   
+            }
+            .hSpacing(.trailing)
+            .padding(.trailing)
+            .padding(.top, 8)
+            
         }
             
     }
@@ -168,46 +205,25 @@ struct ProfileView: View {
                     Image(.gift)
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 20)
+                        .frame(width: 20, height: 20)
                         .padding(.trailing, 4)
                     
-                    Text("19")
+                    Text("\(profile.age)")
                     
                     Divider()
                         .padding(.horizontal)
                     
-                    Image(.gift)
+                    Image(.ruler)
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 20)
+                        .frame(width: 20, height: 20)
                         .padding(.trailing, 4)
                     
-                    Text("19")
+                    Text(profile.tall.centimetersTofeetAndInch)
                     
-                    Divider()
-                        .padding(.horizontal)
-                    
-                    Image(.gift)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 20)
-                        .padding(.trailing, 4)
-                    
-                    Text("19")
-                    
-                    Divider()
-                        .padding(.horizontal)
-                    
-                    Image(.gift)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 20)
-                        .padding(.trailing, 4)
-                    
-                    Text("19")
-                    
-                    Divider()
-                        .padding(.horizontal)
+                    ForEach(Preference.allCases, id: \.self) { preference in
+                        preferencesSection(preference: preference)
+                    }
                     
                 }
                 .padding()
@@ -227,25 +243,33 @@ struct ProfileView: View {
                     
                 }
                 
-                HStack(spacing: 12) {
+                if let schools = profile.schools, !schools.trimmingCharacters(in: .whitespaces).isEmpty {
                     
-                    Image(.school)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 20)
-                    
-                    Text("Brooklyn Collaborative Studies")
+                    HStack(spacing: 12) {
+                        
+                        Image(.school)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 20, height: 20)
+                        
+                        Text(schools)
+                        
+                    }
                     
                 }
                 
-                HStack(spacing: 12) {
+                if let work = profile.displayWork() {
                     
-                    Image(.briefcase)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 20)
-                    
-                    Text("Art painting at Home")
+                    HStack(spacing: 12) {
+                        
+                        Image(.briefcase)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 20)
+                        
+                        Text(work)
+                        
+                    }
                     
                 }
                 
@@ -263,23 +287,24 @@ struct ProfileView: View {
     }
     
     @ViewBuilder
-    var profileImage: some View {
+    func profileImage(_ imageUrl: String) -> some View {
         
         VStack(alignment: .trailing) {
             
-            Image(.img1)
+            WebImage(url: URL(string: imageUrl))
                 .resizable()
                 .scaledToFill()
-            
+                .frame(width: UIScreen.main.bounds.width, height: 500)
+                .clipShape(Rectangle())
                 
             Button {
                 //
             } label: {
                 
-                Image(systemName: "heart")
-                    .font(.avenir(style: .regular, size: 24))
-                
-                    .foregroundColor(.black)
+                Image(.heartActive)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 22)
                    
             }
             .padding(.trailing)
@@ -293,10 +318,78 @@ struct ProfileView: View {
         
     }
     
+    @ViewBuilder
+    func preferencesSection(preference: Preference) -> some View {
+        
+        if let (icon, title) = profile.displayPreference(preference) {
+            
+            HStack {
+                
+                
+                Divider()
+                    .padding(.horizontal)
+                
+                icon
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 20, height: 20)
+                    .padding(.trailing, 4)
+                
+                Text(title)
+                
+            }
+            
+        }
+        
+    }
+    
+    @ViewBuilder
+    func flavorSection(_ flavor: Flavor) -> some View {
+        
+        VStack {
+            
+            VStack(alignment: .leading, spacing: 0) {
+                
+                Text(flavor.header)
+                    .font(.avenir(style: .medium, size: 16))
+                    .textCase(.uppercase)
+                    .tracking(1.6)
+                    .padding(.bottom, 8)
+                
+                Text(flavor.content)
+                    .font(.avenir(style: .regular, size: 16))
+                
+            }
+            .hSpacing(.leading)
+            .padding()
+            .frame(maxWidth: .infinity)
+            .overlay {
+                RoundedRectangle(cornerRadius: 15)
+                    .stroke(.black.opacity(0.2), lineWidth: 0.6)
+            }
+            
+            Button {
+                //
+            } label: {
+                
+                Image(.heartActive)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 22)
+                   
+            }
+            .hSpacing(.trailing)
+            .padding(.trailing)
+            .padding(.top, 8)
+            
+        }
+        
+    }
+    
 }
 
 #Preview {
-    ProfileView()
+    ProfileView(profile: Profile.preview)
 }
 
 extension View{

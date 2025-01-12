@@ -36,13 +36,7 @@ struct DimpleApp: App {
             } else {
                 LoginView()
             }
-//            MatchingView()
             
-//            if token.isEmpty {
-//                LoginView()
-//            } else {
-//                OnboardingView()
-//            }
         }
         .modelContainer(sharedModelContainer)
     }

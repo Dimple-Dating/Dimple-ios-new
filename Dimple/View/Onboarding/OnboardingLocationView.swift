@@ -30,7 +30,7 @@ final class LocationManager: NSObject, ObservableObject {
         case .notDetermined:
             locationManager.requestWhenInUseAuthorization()
         case .restricted, .denied:
-            print("Location access was restricted or denied.")
+            locationManager.requestWhenInUseAuthorization()
         case .authorizedWhenInUse, .authorizedAlways:
             locationManager.requestLocation()
         @unknown default:

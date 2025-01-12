@@ -8,32 +8,38 @@
 import SwiftUI
 import Observation
 
-// /users/list
-
-@Observable
-class HomeViewModel {
-    
-    var users: [User] = []
-    
-    init(){
-        users = [.init(name: "dsa"), .init(name: "aa"), .init(name: "ccc"), .init(name: "dsdsaa"), .init(name: "ds12a")]
-    }
-    
-}
-
-
 struct MatchingView: View {
     
-    var viewModel: HomeViewModel = .init()
+    @Bindable var viewModel: MatchingViewModel
+    
+    @State private var isFetchingProfiles: Bool = false
     
     var body: some View {
         
         ZStack(alignment: .center) {
+            
+            if isFetchingProfiles {
                 
-            ForEach(viewModel.users) { color in
-                ProfileView()
+                ProgressView()
+                    .progressViewStyle(.circular)
+                
+            } else {
+                
+                ForEach(viewModel.profiles) { profile in
+                    ProfileView(profile: profile)
+                }
+                
             }
-                
+            
+        }
+        .onAppear {
+            Task {
+                if viewModel.profiles.isEmpty {
+                    self.isFetchingProfiles = true
+                    await viewModel.fetchUsers()
+                    self.isFetchingProfiles = false
+                }
+            }
         }
     
     }
@@ -41,12 +47,5 @@ struct MatchingView: View {
 }
 
 #Preview {
-    MatchingView()
-}
-
-
-
-@Observable
-final class MatchingViewModel {
-    
+    MatchingView(viewModel: .init())
 }

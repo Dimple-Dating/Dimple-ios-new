@@ -18,7 +18,7 @@ struct OnboardingPrefGenderView: View {
             
             Spacer()
             
-            CustomSelectionButton(text: User.InterestedInGender.men.title, isSelected: .constant(viewModel.user.interestedIn == .men))
+            CustomSelectionButton(text: InterestedInGender.men.title, isSelected: .constant(viewModel.user.interestedIn == .men))
                 .hSpacing(.trailing)
                 .padding(.trailing, 32)
                 .offset(x: viewModel.user.interestedIn != .men && isAnimating ? -UIScreen.main.bounds.width : 0)
@@ -32,7 +32,7 @@ struct OnboardingPrefGenderView: View {
                     }
                 }
             
-            CustomSelectionButton(text: User.InterestedInGender.women.title, isSelected: .constant(viewModel.user.interestedIn == .women))
+            CustomSelectionButton(text: InterestedInGender.women.title, isSelected: .constant(viewModel.user.interestedIn == .women))
                 .hSpacing(.trailing)
                 .padding(.trailing, 32)
                 .offset(x: viewModel.user.interestedIn != .women && isAnimating ? -UIScreen.main.bounds.width : 0)
@@ -46,7 +46,7 @@ struct OnboardingPrefGenderView: View {
                     }
                 }
             
-            CustomSelectionButton(text: User.InterestedInGender.openToAll.title, isSelected: .constant(viewModel.user.interestedIn == .openToAll))
+            CustomSelectionButton(text: InterestedInGender.openToAll.title, isSelected: .constant(viewModel.user.interestedIn == .openToAll))
                 .hSpacing(.trailing)
                 .padding(.trailing, 32)
                 .offset(x: viewModel.user.interestedIn != .openToAll && isAnimating ? -UIScreen.main.bounds.width : 0)
@@ -70,7 +70,7 @@ struct OnboardingPrefGenderView: View {
         
     }
     
-    func savePreferences(value: User.InterestedInGender) {
+    func savePreferences(value: InterestedInGender) {
         
         viewModel.step = .height
         

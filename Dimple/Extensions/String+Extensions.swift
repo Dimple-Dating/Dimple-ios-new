@@ -22,7 +22,14 @@ extension String {
         
         return 0
     }
-    
+
+    // For Preferences mainly
+    func toArray() -> [String] {
+        return self
+            .components(separatedBy: ",")
+            .compactMap { $0.trimmingCharacters(in: .whitespaces) }
+    }
+
 }
 
 extension Collection {

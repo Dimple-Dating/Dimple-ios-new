@@ -21,6 +21,8 @@ struct MainTabbarView: View {
     
     @State private var tabState: Visibility = .visible
     
+    var viewModel: MatchingViewModel = .init()
+    
     init() {
         let appearance = UITabBarAppearance()
         appearance.configureWithOpaqueBackground()
@@ -33,10 +35,8 @@ struct MainTabbarView: View {
     var body: some View {
         
         TabView(selection: $selectedTab) {
-            
-            EmptyView()
 
-            MatchingView()
+            MatchingView(viewModel: self.viewModel)
                 .tabItem {
                     Image(selectedTab == .profiles ? .dimpleActive : .dimple)
                         .foregroundStyle(.black)

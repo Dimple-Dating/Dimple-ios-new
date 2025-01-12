@@ -56,6 +56,8 @@ struct LoginView: View {
     @Bindable private var viewModel = AuthViewModel()
     
     @AppStorage("token") var appToken: String = ""
+    @AppStorage("refreshToken") var refreshToken: String = ""
+    @AppStorage("onboardingFinished") var onboardingFinished: Bool = false
     
     @State private var showOnboarding: Bool = false
     
@@ -132,8 +134,11 @@ struct LoginView: View {
                 Task {
                     await viewModel.loadUser(token: token, userData: userCredential.user)
                     appToken = viewModel.user?.token ?? ""
-                    showOnboarding = true//((viewModel.user?.onboardingFinished ?? "") != "true")
+                    refreshToken = viewModel.user?.refreshToken ?? ""
+                    onboardingFinished = ((viewModel.user?.onboardingFinished ?? "") == "true")
+                    showOnboarding = ((viewModel.user?.onboardingFinished ?? "") != "true")
                     print("TOKEN = \(appToken)")
+                    print("REFRESH TOKEN = \(refreshToken)")
                 }
             }
         }

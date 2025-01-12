@@ -1,5 +1,5 @@
 {
-  "originHash" : "79dce5428caa1405ac606b31abf83743efd0ac04437577c389c94171977200ce",
+  "originHash" : "1181214edf289f6c4baf3ecb5c128c938adb2fe8d36a4288cae4e51b85d3c3b7",
   "pins" : [
     {
       "identity" : "ios-places-sdk",
@@ -8,6 +8,24 @@
       "state" : {
         "revision" : "1737dc600c80eaeaf9b0cf0d25522b8ead713d60",
         "version" : "9.2.0"
+      }
+    },
+    {
+      "identity" : "sdwebimage",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SDWebImage/SDWebImage.git",
+      "state" : {
+        "revision" : "10d06f6a33bafae8c164fbfd1f03391f6d4692b3",
+        "version" : "5.20.0"
+      }
+    },
+    {
+      "identity" : "sdwebimageswiftui",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SDWebImage/SDWebImageSwiftUI.git",
+      "state" : {
+        "revision" : "451c6dfd5ecec2cf626d1d9ca81c2d4a60355172",
+        "version" : "3.1.3"
       }
     }
   ],
