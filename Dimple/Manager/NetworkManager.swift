@@ -318,7 +318,7 @@ enum APIRoute {
     
     case getUserList
     case likeProfile
-    case likePhoto(photoId: Int)
+    case likePhoto(photoId: String)
     case commentPhoto
     case likeFlavor
     case likeStory

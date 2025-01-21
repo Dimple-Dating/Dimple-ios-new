@@ -12,6 +12,10 @@ class MatchingViewModel {
     
     var profiles: [Profile] = []
     
+    var selectedProfile: Profile? = nil
+    var commentPhotoId: Int? = nil
+    var commentFlavorId: Int? = nil
+    
     var fetchPage: Int = 1
     
     init() {
@@ -26,20 +30,31 @@ class MatchingViewModel {
         ]
         
         do {
-            let (data, _) = try await NetworkManager.shared.request(.getUserList, queryParameters: data, method: .GET)
-            let json = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed) as? [String: Any]
-            print(json)
-            let responseData = try JSONDecoder().decode(ProfilesResponse.self, from: data)
+            let (rawData, _) = try await NetworkManager.shared.request(.getUserList, queryParameters: data, method: .GET)
             
-            // Append new users to existing array
-            self.profiles.append(contentsOf: responseData.users)
+            guard
+                let json = try JSONSerialization.jsonObject(with: rawData, options: []) as? [String: Any],
+                let usersArray = json["users"] as? [[String: Any]]
+            else {
+                self.profiles = []
+                return
+            }
+            print(usersArray)
+            let newProfiles: [Profile] = usersArray.compactMap { userDict in
+                guard let singleUserData = try? JSONSerialization.data(withJSONObject: userDict, options: []) else {
+                    return nil
+                }
+                return try? JSONDecoder().decode(Profile.self, from: singleUserData)
+            }
+            
+            self.profiles = newProfiles
             
         } catch {
-            print("Request failed with error:", error)
-            // Handle error appropriately
+            print("Request failed with error:", error.localizedDescription)
         }
         
     }
+    
 }
 
 // Add this structure to handle the API response

@@ -15,6 +15,8 @@
 		3A29269E2D305A0C00103290 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A29269D2D305A0C00103290 /* OnboardingViewModel.swift */; };
 		3A2926A12D3060F200103290 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 3A2926A02D3060F200103290 /* SDWebImageSwiftUI */; };
 		3A2926A32D3070F200103290 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2926A22D3070F200103290 /* Preferences.swift */; };
+		3A29273A2D3FCE9E00103290 /* LikeCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2927392D3FCE9E00103290 /* LikeCommentView.swift */; };
+		3A29273C2D3FE64A00103290 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A29273B2D3FE64A00103290 /* ProfileViewModel.swift */; };
 		3A433AB72C75192800F183F2 /* DimpleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A433AB62C75192800F183F2 /* DimpleApp.swift */; };
 		3A433AB92C75192800F183F2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A433AB82C75192800F183F2 /* ContentView.swift */; };
 		3A433ABB2C75192800F183F2 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A433ABA2C75192800F183F2 /* Item.swift */; };
@@ -59,6 +61,8 @@
 		3A29269B2D3059F000103290 /* MatchingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchingViewModel.swift; sourceTree = "<group>"; };
 		3A29269D2D305A0C00103290 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
 		3A2926A22D3070F200103290 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
+		3A2927392D3FCE9E00103290 /* LikeCommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeCommentView.swift; sourceTree = "<group>"; };
+		3A29273B2D3FE64A00103290 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		3A433AB32C75192800F183F2 /* Dimple.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dimple.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A433AB62C75192800F183F2 /* DimpleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DimpleApp.swift; sourceTree = "<group>"; };
 		3A433AB82C75192800F183F2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -115,6 +119,7 @@
 			children = (
 				3A29269B2D3059F000103290 /* MatchingViewModel.swift */,
 				3A29269D2D305A0C00103290 /* OnboardingViewModel.swift */,
+				3A29273B2D3FE64A00103290 /* ProfileViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -258,6 +263,7 @@
 			isa = PBXGroup;
 			children = (
 				3AF8AC272CE78D0500C15078 /* MatchingView.swift */,
+				3A2927392D3FCE9E00103290 /* LikeCommentView.swift */,
 			);
 			path = Matching;
 			sourceTree = "<group>";
@@ -354,6 +360,7 @@
 				3A433AB92C75192800F183F2 /* ContentView.swift in Sources */,
 				3AE12EE62D04FCEF0039C64A /* OnboardingSchoolView.swift in Sources */,
 				3AF8AC2B2CE78D8900C15078 /* ProfileView.swift in Sources */,
+				3A29273A2D3FCE9E00103290 /* LikeCommentView.swift in Sources */,
 				3AF8AC172CE23EAB00C15078 /* OnboardingRateView.swift in Sources */,
 				3A2926972D30120600103290 /* Profile.swift in Sources */,
 				3AF8AC192CE23FA400C15078 /* OnboardingFinalView.swift in Sources */,
@@ -376,6 +383,7 @@
 				3A2926A32D3070F200103290 /* Preferences.swift in Sources */,
 				3AF8AC152CE23CA100C15078 /* OnboardingLocationView.swift in Sources */,
 				3AF8AC112CDE1C4400C15078 /* NetworkManager.swift in Sources */,
+				3A29273C2D3FE64A00103290 /* ProfileViewModel.swift in Sources */,
 				3A29269C2D3059F000103290 /* MatchingViewModel.swift in Sources */,
 				3A433ACD2C7520A000F183F2 /* OnboardingProfileView.swift in Sources */,
 				3AF8AC012CDAD82600C15078 /* CustomSelectionButton.swift in Sources */,
@@ -532,6 +540,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationPortrait";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -570,6 +579,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationPortrait";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

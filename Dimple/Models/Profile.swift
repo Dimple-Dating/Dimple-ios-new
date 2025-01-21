@@ -14,7 +14,7 @@ struct Profile: Identifiable, Decodable {
     // MARK: Basic Info
     let id: String
     let firstname: String
-    let lastname: String
+    let lastname: String?
     let email: String?
     let age: Int
     let gender: Gender

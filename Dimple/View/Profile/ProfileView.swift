@@ -8,32 +8,37 @@
 import SwiftUI
 import SDWebImageSwiftUI
 
+
 struct ProfileView: View {
     
-    var profile: Profile
+    var profileViewModel: ProfileViewModel
+    
+    var likeTapHandler: (_ profile: Profile, _ photoId: Int?, _ flavorId: Int?) -> ()
     
     @State var offset: CGFloat = 0
     @GestureState var isDragging: Bool = false
     
     @State var endSwipe: Bool = false
     
-    var numberOfSections: Int {
-        if (profile.flavors?.count ?? 0) > profile.images.count {
-            return profile.flavors?.count ?? 0
-        }
-        return profile.images.count
-    }
+//    @State private var selectedSectionIndex: Int = 0
+//    @State private var isHeartTap: Bool = false
     
-    init(profile: Profile) {
-        self.profile = profile
-        UIScrollView.appearance().bounces = false
+    @State private var likedPhotoId: Int = 0
+    @State private var likedFlavorId: Int = 0
+    
+    var numberOfSections: Int {
+        if (profileViewModel.profile.flavors?.count ?? 0) > profileViewModel.profile.images.count {
+            return profileViewModel.profile.flavors?.count ?? 0
+        }
+        return profileViewModel.profile.images.count
     }
     
     var body: some View {
-            
+
         GeometryReader { proxy in
-                let size = proxy.size
+//                let size = proxy.size
         
+                
             ZStack {
                 
                 ScrollView(showsIndicators: false) {
@@ -47,13 +52,13 @@ struct ProfileView: View {
                         
                         ForEach(0..<numberOfSections, id: \.self) { index in
                             
-                            if index <= profile.images.count - 1 {
-                                profileImage(profile.images[index].fullImageUrl)
+                            if index <= profileViewModel.profile.images.count - 1 {
+                                profileImageSection(profileViewModel.profile.images[index])
                                     .padding(.bottom, 12)
                             }
                             
-                            if index <= (profile.flavors?.count ?? 0) - 1 {
-                                flavorSection(profile.flavors![index])
+                            if index <= (profileViewModel.profile.flavors?.count ?? 0) - 1 {
+                                flavorSection(profileViewModel.profile.flavors![index])
                                     .padding(.horizontal)
                                     .padding(.bottom, 12)
                             }
@@ -78,6 +83,9 @@ struct ProfileView: View {
                     
                 }
                 
+            }
+            .onAppear {
+                UIScrollView.appearance().bounces = false
             }
         
         }
@@ -106,10 +114,10 @@ struct ProfileView: View {
 //                            endSwipeActions()
                             
                             if translation > 0 {
-                                rightSwipe()
+                                swipeToYes()
                             }
                             else{
-                                leftSwipe()
+                                swipeToNo()
                             }
                         }
                         else {
@@ -122,21 +130,13 @@ struct ProfileView: View {
         
     }
     
-    func leftSwipe(){
-        print("Left Swiped")
-    }
-    
-    func rightSwipe(){
-        print("Right Swiped")
-    }
-    
     @ViewBuilder
     var profileDetailsHeader: some View {
         
         VStack {
             ZStack(alignment: .topLeading) {
                 
-                WebImage(url: URL(string: profile.avatar?.path ?? ""))
+                WebImage(url: URL(string: profileViewModel.profile.avatar?.path ?? ""))
                     .resizable()
                     .scaledToFill()
                     .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
@@ -144,14 +144,14 @@ struct ProfileView: View {
                 
                 HStack {
                     
-                    WebImage(url: URL(string: profile.avatar?.path ?? ""))
+                    WebImage(url: URL(string: profileViewModel.profile.avatar?.path ?? ""))
                         .resizable()
                         .scaledToFill()
                         .frame(width: 40)
                         .clipShape(Circle())
                         .padding(.trailing)
                     
-                    Text(profile.firstname)
+                    Text(profileViewModel.profile.firstname)
                         .font(.avenir(style: .medium, size: 20))
                         .textCase(.uppercase)
                         .foregroundStyle(.white)
@@ -176,10 +176,10 @@ struct ProfileView: View {
             }
             
             Button {
-                //
+                didLikeTap(photoId: profileViewModel.profile.avatar?.id)
             } label: {
                 
-                Image(.heartActive)
+                Image(self.likedPhotoId == profileViewModel.profile.avatar?.id ? .heartFill : .heartActive)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 22)
@@ -208,7 +208,7 @@ struct ProfileView: View {
                         .frame(width: 20, height: 20)
                         .padding(.trailing, 4)
                     
-                    Text("\(profile.age)")
+                    Text("\(profileViewModel.profile.age)")
                     
                     Divider()
                         .padding(.horizontal)
@@ -219,7 +219,7 @@ struct ProfileView: View {
                         .frame(width: 20, height: 20)
                         .padding(.trailing, 4)
                     
-                    Text(profile.tall.centimetersTofeetAndInch)
+                    Text(profileViewModel.profile.tall.centimetersTofeetAndInch)
                     
                     ForEach(Preference.allCases, id: \.self) { preference in
                         preferencesSection(preference: preference)
@@ -243,7 +243,7 @@ struct ProfileView: View {
                     
                 }
                 
-                if let schools = profile.schools, !schools.trimmingCharacters(in: .whitespaces).isEmpty {
+                if let schools = profileViewModel.profile.schools, !schools.trimmingCharacters(in: .whitespaces).isEmpty {
                     
                     HStack(spacing: 12) {
                         
@@ -258,7 +258,7 @@ struct ProfileView: View {
                     
                 }
                 
-                if let work = profile.displayWork() {
+                if let work = profileViewModel.profile.displayWork() {
                     
                     HStack(spacing: 12) {
                         
@@ -287,44 +287,11 @@ struct ProfileView: View {
     }
     
     @ViewBuilder
-    func profileImage(_ imageUrl: String) -> some View {
-        
-        VStack(alignment: .trailing) {
-            
-            WebImage(url: URL(string: imageUrl))
-                .resizable()
-                .scaledToFill()
-                .frame(width: UIScreen.main.bounds.width, height: 500)
-                .clipShape(Rectangle())
-                
-            Button {
-                //
-            } label: {
-                
-                Image(.heartActive)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 22)
-                   
-            }
-            .padding(.trailing)
-            .padding(.top, 8)
-
-            
-        }
-        .padding(.bottom, 36)
-        .padding(.top)
-        
-        
-    }
-    
-    @ViewBuilder
     func preferencesSection(preference: Preference) -> some View {
         
-        if let (icon, title) = profile.displayPreference(preference) {
+        if let (icon, title) = profileViewModel.profile.displayPreference(preference) {
             
             HStack {
-                
                 
                 Divider()
                     .padding(.horizontal)
@@ -340,6 +307,37 @@ struct ProfileView: View {
             }
             
         }
+        
+    }
+    
+    @ViewBuilder
+    func profileImageSection(_ photo: UserImage) -> some View {
+        
+        VStack(alignment: .trailing) {
+            
+            WebImage(url: URL(string: photo.fullImageUrl))
+                .resizable()
+                .scaledToFill()
+                .frame(width: UIScreen.main.bounds.width, height: 500)
+                .clipShape(Rectangle())
+                .contentShape(Rectangle())
+                
+            Button {
+                didLikeTap(photoId: photo.id)
+            } label: {
+                
+                Image(self.likedPhotoId == photo.id ? .heartFill : .heartActive)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 22, height: 22)
+                   
+            }
+            .padding(.trailing)
+            .padding(.top, 8)
+
+        }
+        .padding(.bottom, 36)
+        .padding(.top)
         
     }
     
@@ -369,28 +367,57 @@ struct ProfileView: View {
             }
             
             Button {
-                //
+                self.didLikeTap(flavorId: flavor.id)
             } label: {
                 
-                Image(.heartActive)
+                Image(self.likedFlavorId == flavor.id ? .heartFill : .heartActive)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 22)
                    
             }
             .hSpacing(.trailing)
-            .padding(.trailing)
+           // .padding(.trailing)
             .padding(.top, 8)
             
         }
         
     }
     
+    func swipeToNo() {
+        Task {
+            await profileViewModel.doNotLikeProfile()
+        }
+    }
+    
+    func swipeToYes() {
+        Task {
+            await profileViewModel.likeProfile()
+        }
+    }
+    
+    func didLikeTap(photoId: Int? = nil, flavorId: Int? = nil) {
+        
+        withAnimation {
+            
+            if let photoId {
+                self.likedPhotoId = photoId
+            } else if let flavorId {
+                self.likedFlavorId = flavorId
+            }
+            
+        } completion: {
+            self.likeTapHandler(profileViewModel.profile, photoId, flavorId)
+            self.offset = UIScreen.main.bounds.width
+        }
+
+    }
+    
 }
 
-#Preview {
-    ProfileView(profile: Profile.preview)
-}
+//#Preview {
+//    ProfileView(profileViewModel: .constant(.init(profile: .init(id: "", firstname: "", lastname: nil, email: nil, age: 18, gender: .female, tall: 1222, lat: 122, lng: 122, avatar: nil, images: [], children: "", pets: <#T##String#>, diet: <#T##String#>, drinking: <#T##String#>, smoking: <#T##String#>, ethncity: <#T##String#>, politics: <#T##String#>, religion: <#T##String#>, industry: <#T##String#>, lookingFor: <#T##String#>, activite: <#T##String#>, schools: <#T##String?#>, workPlace: <#T##String?#>, workTitle: <#T##String?#>, isVideoChat: <#T##Bool#>, isActiveInstagram: <#T##Bool#>, isHaveStories: <#T##Bool#>, isInstagramConnected: <#T##Bool#>, isPhotosInstagram: <#T##Bool#>, isSendReadReceipts: <#T##Bool#>, isShowActivityStatus: <#T##Bool#>, isSnoozeMode: <#T##Bool#>, twilioStatus: <#T##Int#>, hiddenOptionActivites: <#T##Bool#>, hiddenOptionChildren: <#T##Bool#>, hiddenOptionDiet: <#T##Bool#>, hiddenOptionDrinking: <#T##Bool#>, hiddenOptionEthnicity: <#T##Bool#>, hiddenOptionIndustry: <#T##Bool#>, hiddenOptionLookingFor: <#T##Bool#>, hiddenOptionPets: <#T##Bool#>, hiddenOptionPolitics: <#T##Bool#>, hiddenOptionReligion: <#T##Bool#>, hiddenOptionSmoking: <#T##Bool#>, createdAt: <#T##String#>, lastActive: <#T##String#>, flavors: <#T##[Flavor]?#>))))
+//}
 
 extension View{
     func getRect()->CGRect{

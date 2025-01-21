@@ -14,23 +14,38 @@ struct MatchingView: View {
     
     @State private var isFetchingProfiles: Bool = false
     
+    @State private var path: [NavigationPath] = []
+    
+    enum NavigationPath {
+        case commentView
+    }
+    
     var body: some View {
         
-        ZStack(alignment: .center) {
+        NavigationStack(path: $path) {
             
-            if isFetchingProfiles {
+            ZStack(alignment: .center) {
                 
-                ProgressView()
-                    .progressViewStyle(.circular)
-                
-            } else {
-                
-                ForEach(viewModel.profiles) { profile in
-                    ProfileView(profile: profile)
+                if isFetchingProfiles {
+                    
+                    ProgressView()
+                        .progressViewStyle(.circular)
+                    
+                } else {
+                    
+                    ForEach(viewModel.profiles) { profile in
+                        ProfileView(profileViewModel: ProfileViewModel(profile: profile), likeTapHandler: self.likeProfileHandler)
+                    }
+                    
                 }
                 
             }
-            
+            .navigationDestination(for: NavigationPath.self) { path in
+                switch path {
+                case .commentView:
+                    LikeCommentView(profile: self.viewModel.selectedProfile!, commentPhotoId: self.viewModel.commentPhotoId, commentFlavorId: self.viewModel.commentFlavorId)
+                }
+            }
         }
         .onAppear {
             Task {
@@ -44,7 +59,15 @@ struct MatchingView: View {
     
     }
     
+    func likeProfileHandler(profile: Profile, photoId: Int?, flavorId: Int?) {
+        self.viewModel.selectedProfile = profile
+        self.viewModel.commentPhotoId = photoId
+        self.viewModel.commentFlavorId = flavorId
+        self.path = [.commentView]
+    }
+    
 }
+
 
 #Preview {
     MatchingView(viewModel: .init())
