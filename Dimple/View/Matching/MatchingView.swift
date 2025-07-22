@@ -9,6 +9,19 @@ import Lottie
 import SwiftUI
 import Observation
 
+struct TestView: View {
+    
+    var body: some View {
+        
+        VStack {
+            
+            LottieView(animation: .named("searching.json"))
+            
+        }
+        
+    }
+}
+
 struct MatchingView: View {
     
     @Bindable var viewModel: MatchingViewModel
@@ -32,6 +45,9 @@ struct MatchingView: View {
                 if isFetchingProfiles {
                     
                     LottieView(animation: .named("searching.json"))
+                        .playbackMode(.playing(.toProgress(1, loopMode: .loop)))
+                        .frame(width: 90)
+                    
                     
                 } else {
                     
@@ -110,5 +126,5 @@ struct MatchingView: View {
 
 
 #Preview {
-    MatchingView(viewModel: .init())
+    TestView()
 }
