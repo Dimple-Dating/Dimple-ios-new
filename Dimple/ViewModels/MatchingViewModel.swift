@@ -12,16 +12,18 @@ class MatchingViewModel {
     
     var profiles: [Profile] = []
     
+    // Index of the currently visible/top profile
+    var currentIndex: Int = 0
+    
+    // For undo support (only last NO)
+    var lastNoIndex: Int? = nil
+    
     var selectedProfile: Profile? = nil
     var commentPhotoId: Int? = nil
     var commentFlavorId: Int? = nil
     
     var fetchPage: Int = 1
     
-    init() {
-        print("robie init")
-    }
-
     func fetchUsers(isVideochatSwipeMode: Bool = false) async {
         
         let data: [String: Any] = [
@@ -53,6 +55,17 @@ class MatchingViewModel {
             print("Request failed with error:", error.localizedDescription)
         }
         
+    }
+    
+    func undoLastSwipe() {
+        guard let idx = lastNoIndex else { return }
+        currentIndex = idx
+        lastNoIndex = nil
+    }
+    
+    func topProfiles() -> ArraySlice<Profile> {
+        // Return from currentIndex to end
+        return profiles[currentIndex..<profiles.count]
     }
     
 }

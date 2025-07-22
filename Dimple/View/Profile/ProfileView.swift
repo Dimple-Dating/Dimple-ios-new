@@ -14,6 +14,10 @@ struct ProfileView: View {
     var profileViewModel: ProfileViewModel
     
     var likeTapHandler: (_ profile: Profile, _ photoId: Int?, _ flavorId: Int?) -> ()
+    var dismissProfileHandler: (_ profile: Profile) -> ()
+    
+    var undoTapHandler: () -> ()
+    var moreTapHandler: () -> ()
     
     @State var offset: CGFloat = 0
     @GestureState var isDragging: Bool = false
@@ -38,7 +42,6 @@ struct ProfileView: View {
         GeometryReader { proxy in
 //                let size = proxy.size
         
-                
             ZStack {
                 
                 ScrollView(showsIndicators: false) {
@@ -72,6 +75,7 @@ struct ProfileView: View {
                 }
                 .ignoresSafeArea()
                 .blur(radius: isDragging ? 4 : 0)
+                .scrollDisabled(isDragging)
                 
                 if isDragging {
                     
@@ -159,13 +163,22 @@ struct ProfileView: View {
                     
                     Spacer()
                     
-                    Image(.rotate)
-                        .foregroundStyle(.white)
-                        .shadow(color: .black.opacity(0.7), radius: 3)
+                    Button {
+                        didUndoTap()
+                    } label: {
+                        Image(.rotate)
+                            .foregroundStyle(.white)
+                            .shadow(color: .black.opacity(0.7), radius: 3)
+                    }
+
+                    Button {
+                        didMoreTap()
+                    } label: {
+                        Image(.more)
+                            .foregroundStyle(.white)
+                            .shadow(color: .black.opacity(0.7), radius: 3)
+                    }
                     
-                    Image(.more)
-                        .foregroundStyle(.white)
-                        .shadow(color: .black.opacity(0.7), radius: 3)
                     
                 }
                 .frame(height: 150)
@@ -384,10 +397,23 @@ struct ProfileView: View {
         
     }
     
+    func didUndoTap() {
+        undoTapHandler()
+        withAnimation {
+            self.offset = .zero
+        }
+    }
+    
+    func didMoreTap() {
+        moreTapHandler()
+    }
+    
     func swipeToNo() {
         Task {
             await profileViewModel.doNotLikeProfile()
         }
+        dismissProfileHandler(profileViewModel.profile)
+        self.offset = .zero
     }
     
     func swipeToYes() {

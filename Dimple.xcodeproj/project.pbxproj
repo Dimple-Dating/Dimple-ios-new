@@ -28,6 +28,8 @@
 		3A4CAD172D10430600124AFE /* GooglePlaces in Frameworks */ = {isa = PBXBuildFile; productRef = 3A4CAD162D10430600124AFE /* GooglePlaces */; };
 		3A4CAD192D10430600124AFE /* GooglePlacesSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 3A4CAD182D10430600124AFE /* GooglePlacesSwift */; };
 		3A4CAD1C2D104A1400124AFE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3A4CAD1B2D104A1400124AFE /* GoogleService-Info.plist */; };
+		3A703D952E2FB4DF002D42FF /* searching.json in Resources */ = {isa = PBXBuildFile; fileRef = 3A703D942E2FB4DF002D42FF /* searching.json */; };
+		3A703D982E2FB52E002D42FF /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 3A703D972E2FB52E002D42FF /* Lottie */; };
 		3ACC64712C75341A00545F98 /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ACC64702C75341A00545F98 /* View+Extensions.swift */; };
 		3AE12EE62D04FCEF0039C64A /* OnboardingSchoolView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE12EE52D04FCEF0039C64A /* OnboardingSchoolView.swift */; };
 		3AE3CACF2D2856E600A06D93 /* TabStateScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE3CACE2D2856E600A06D93 /* TabStateScrollView.swift */; };
@@ -75,6 +77,7 @@
 		3A433ACC2C7520A000F183F2 /* OnboardingProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingProfileView.swift; sourceTree = "<group>"; };
 		3A4CAD132D1042DA00124AFE /* SchoolSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolSearchView.swift; sourceTree = "<group>"; };
 		3A4CAD1B2D104A1400124AFE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		3A703D942E2FB4DF002D42FF /* searching.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = searching.json; sourceTree = "<group>"; };
 		3ACC64702C75341A00545F98 /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
 		3AE12EE52D04FCEF0039C64A /* OnboardingSchoolView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSchoolView.swift; sourceTree = "<group>"; };
 		3AE3CACE2D2856E600A06D93 /* TabStateScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabStateScrollView.swift; sourceTree = "<group>"; };
@@ -108,6 +111,7 @@
 				3A2926A12D3060F200103290 /* SDWebImageSwiftUI in Frameworks */,
 				3A4CAD172D10430600124AFE /* GooglePlaces in Frameworks */,
 				3A4CAD192D10430600124AFE /* GooglePlacesSwift in Frameworks */,
+				3A703D982E2FB52E002D42FF /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -156,6 +160,7 @@
 				3A433ABA2C75192800F183F2 /* Item.swift */,
 				3A433ABC2C75192800F183F2 /* Assets.xcassets */,
 				3A433AC12C75192800F183F2 /* Dimple.entitlements */,
+				3A703D942E2FB4DF002D42FF /* searching.json */,
 				3A433AC22C75192800F183F2 /* Info.plist */,
 				3A433ABE2C75192800F183F2 /* Preview Content */,
 			);
@@ -296,6 +301,7 @@
 				3A4CAD162D10430600124AFE /* GooglePlaces */,
 				3A4CAD182D10430600124AFE /* GooglePlacesSwift */,
 				3A2926A02D3060F200103290 /* SDWebImageSwiftUI */,
+				3A703D972E2FB52E002D42FF /* Lottie */,
 			);
 			productName = Dimple;
 			productReference = 3A433AB32C75192800F183F2 /* Dimple.app */;
@@ -328,6 +334,7 @@
 			packageReferences = (
 				3A4CAD152D10430600124AFE /* XCRemoteSwiftPackageReference "ios-places-sdk" */,
 				3A29269F2D3060F200103290 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+				3A703D962E2FB52E002D42FF /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			productRefGroup = 3A433AB42C75192800F183F2 /* Products */;
 			projectDirPath = "";
@@ -344,6 +351,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3AF8AC252CE525A100C15078 /* Infos in Resources */,
+				3A703D952E2FB4DF002D42FF /* searching.json in Resources */,
 				3A4CAD1C2D104A1400124AFE /* GoogleService-Info.plist in Resources */,
 				3A433AC02C75192800F183F2 /* Preview Assets.xcassets in Resources */,
 				3A433ABD2C75192800F183F2 /* Assets.xcassets in Resources */,
@@ -526,7 +534,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Dimple/Dimple.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"Dimple/Preview Content\"";
 				DEVELOPMENT_TEAM = F2J3YDZBLU;
 				ENABLE_PREVIEWS = YES;
@@ -540,7 +548,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationPortrait";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -565,7 +573,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Dimple/Dimple.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"Dimple/Preview Content\"";
 				DEVELOPMENT_TEAM = F2J3YDZBLU;
 				ENABLE_PREVIEWS = YES;
@@ -579,7 +587,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationPortrait";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -637,6 +645,14 @@
 				minimumVersion = 9.2.0;
 			};
 		};
+		3A703D962E2FB52E002D42FF /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.5.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -654,6 +670,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3A4CAD152D10430600124AFE /* XCRemoteSwiftPackageReference "ios-places-sdk" */;
 			productName = GooglePlacesSwift;
+		};
+		3A703D972E2FB52E002D42FF /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3A703D962E2FB52E002D42FF /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
