@@ -9,19 +9,6 @@ import Lottie
 import SwiftUI
 import Observation
 
-struct TestView: View {
-    
-    var body: some View {
-        
-        VStack {
-            
-            LottieView(animation: .named("searching.json"))
-            
-        }
-        
-    }
-}
-
 struct MatchingView: View {
     
     @Bindable var viewModel: MatchingViewModel
@@ -122,9 +109,4 @@ struct MatchingView: View {
         showMoreDialog = true
     }
     
-}
-
-
-#Preview {
-    TestView()
 }
