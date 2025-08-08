@@ -360,6 +360,7 @@ enum APIRoute {
     case createPreference
     case updatePreferences
 
+    case getNotifications
     case getNotificationBadgesCounts(userId: String)
     
     case refreshToken
@@ -430,6 +431,8 @@ enum APIRoute {
             return "/user/flavour/update"
         case .deleteProfile:
             return "/user"
+        case .getNotifications:
+            return "/winks/get/as-related"
         case .getNotificationBadgesCounts(let userId):
             return "/user/badges/\(userId)"
         case .refreshToken:
